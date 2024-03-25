@@ -1,10 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/Screens/Homescreen/homescreen.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/signup.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
 
   bool passwordvisible = false;
+  final CollectionReference firedata =
+      FirebaseFirestore.instance.collection('name');
+  TextEditingController usernamecontroller = TextEditingController();
+
+  TextEditingController passwordcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +55,19 @@ class LoginPage extends StatelessWidget {
                       ' Username',
                       style: TextStyle(
                           color: Colors.white,
+                          fontSize: 12,
                           fontFamily: 'Kalliyath1',
                           fontWeight: FontWeight.w400),
                     ),
                     TextFormField(
+                      controller: usernamecontroller,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
+                        prefixIcon: const Icon(Icons.person),
                         filled: true,
                         fillColor: const Color.fromARGB(255, 240, 238, 238),
                         hintText: 'Username',
-                        hintStyle: TextStyle(fontFamily: 'Kalliyath1'),
+                        hintStyle: const TextStyle(fontFamily: 'Kalliyath1'),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10.0),
                         ),
@@ -70,15 +81,19 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(
                           color: Colors.white,
                           fontFamily: 'Kalliyath1',
+                          fontSize: 12,
                           fontWeight: FontWeight.w400),
                     ),
                     TextFormField(
+                      controller: passwordcontroller,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       obscureText: passwordvisible,
                       decoration: InputDecoration(
                         suffixIcon: IconButton(
                             onPressed: () {},
                             icon: const Icon(Icons.remove_red_eye)),
                         filled: true,
+                        prefixIcon: Icon(Icons.lock),
                         fillColor: const Color.fromARGB(255, 240, 238, 238),
                         hintText: 'Password',
                         hintStyle: const TextStyle(fontFamily: 'Kalliyath1'),
@@ -128,7 +143,8 @@ class LoginPage extends StatelessWidget {
                       child: InkWell(
                         splashColor: const Color.fromARGB(121, 129, 128, 128),
                         onTap: () {
-                          print('hello');
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (ctx) => HomeScreen()));
                         },
                         child: Container(
                           height: size.height / 15,

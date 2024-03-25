@@ -71,9 +71,11 @@ class OtpVerificationPage extends StatelessWidget {
                         style: TextStyle(
                             color: Colors.white,
                             fontFamily: 'Kalliyath1',
+                            fontSize: 12,
                             fontWeight: FontWeight.w400),
                       ),
                       TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: otp_controller,
                         validator: (value) {
                           if (value!.isEmpty) {
@@ -85,17 +87,17 @@ class OtpVerificationPage extends StatelessWidget {
                           filled: true,
                           fillColor: const Color.fromARGB(255, 240, 238, 238),
                           hintText: 'Enter OTP Number',
-                          hintStyle: TextStyle(fontFamily: 'Kalliyath1'),
+                          prefixIcon: const Icon(Icons.lock_outline_rounded),
+                          hintStyle: const TextStyle(
+                              fontFamily: 'Kalliyath1',
+                              color: Color.fromARGB(210, 158, 158, 158)),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height: size.height / 30,
-                      ),
-                      SizedBox(
-                        height: size.height / 50,
+                        height: size.height / 40,
                       ),
                       Material(
                         clipBehavior: Clip.hardEdge,
