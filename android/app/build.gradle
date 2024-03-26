@@ -1,8 +1,8 @@
 plugins {
     id "com.android.application"
-    id "com.google.gms.google-services"
     id "kotlin-android"
     id "dev.flutter.flutter-gradle-plugin"
+    id 'com.google.gms.google-services'
     
 }
 
@@ -23,6 +23,7 @@ def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
+
 
 android {
     namespace "com.example.kalliyath_villa"
@@ -67,7 +68,9 @@ flutter {
 }
 
 dependencies {
+    // Import the BoM for the Firebase platform
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-
+    // Also add the dependency for the Google Play services library and specify its version
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 }
 

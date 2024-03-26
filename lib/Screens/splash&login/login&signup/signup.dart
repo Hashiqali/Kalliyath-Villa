@@ -1,7 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/otp_verification.dart';
+
+TextEditingController phoneNumberotpcontroller = TextEditingController();
 
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
@@ -12,13 +17,11 @@ class SignupPage extends StatelessWidget {
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  TextEditingController Usernamecontroller = TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
 
-  TextEditingController PhoneNumbercontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
 
-  TextEditingController Passwordcontroller = TextEditingController();
-
-  TextEditingController ConfirmPasswordcontroller = TextEditingController();
+  TextEditingController confirmPasswordcontroller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +86,7 @@ class SignupPage extends StatelessWidget {
                       ),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: Usernamecontroller,
+                        controller: usernamecontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please Username';
@@ -116,17 +119,22 @@ class SignupPage extends StatelessWidget {
                       ),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: PhoneNumbercontroller,
+                        controller: phoneNumberotpcontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please Enter Phone Number';
                           }
                           return null;
                         },
+                        inputFormatters: [LengthLimitingTextInputFormatter(10)],
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 240, 238, 238),
                           prefixIcon: const Icon(Icons.phone),
+                          prefixText: '+91',
+                          prefixStyle:
+                              TextStyle(color: Colors.black, fontSize: 16.5),
                           hintText: 'Phone Number',
                           hintStyle: const TextStyle(
                               fontFamily: 'Kalliyath1',
@@ -149,7 +157,7 @@ class SignupPage extends StatelessWidget {
                       ),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: Passwordcontroller,
+                        controller: passwordcontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please Enter Password';
@@ -186,7 +194,7 @@ class SignupPage extends StatelessWidget {
                       ),
                       TextFormField(
                         autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: ConfirmPasswordcontroller,
+                        controller: confirmPasswordcontroller,
                         validator: (value) {
                           if (value!.isEmpty) {
                             return 'Please Enter Confirm Password';
@@ -267,7 +275,7 @@ class SignupPage extends StatelessWidget {
                             splashColor:
                                 const Color.fromARGB(121, 129, 128, 128),
                             onTap: () {
-                              print('hello');
+                              googleSigning(context);
                             },
                             child: Container(
                               height: size.height / 15,
@@ -326,8 +334,7 @@ class SignupPage extends StatelessWidget {
 
   signup(context) {
     if (formkey.currentState!.validate()) {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (ctx) => OtpVerificationPage()));
+      auth(context);
     } else {
       const messege = 'Please Fill The Form';
       IconSnackBar.show(context,
@@ -335,5 +342,16 @@ class SignupPage extends StatelessWidget {
           snackBarType: SnackBarType.alert,
           label: messege);
     }
+  }
+
+  addfirebase() async {
+    final data = {
+      'Username': usernamecontroller.text.trim(),
+      'Phone Number': phoneNumberotpcontroller.text.trim(),
+      'Password': passwordcontroller.text.trim(),
+      'RePassword': confirmPasswordcontroller.text.trim()
+    };
+    await firedata.add(data);
+    print('success');
   }
 }

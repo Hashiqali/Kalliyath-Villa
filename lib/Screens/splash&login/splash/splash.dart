@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -81,8 +82,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   splashtime() async {
     await Future.delayed(const Duration(seconds: 2));
+    getAllDocuments();
     // ignore: use_build_context_synchronously
-
     Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (ctx) => LoginPage()));
   }

@@ -1,10 +1,13 @@
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/signup.dart';
+import 'package:kalliyath_villa/Screens/Homescreen/homescreen.dart';
 
 class OtpVerificationPage extends StatelessWidget {
-  OtpVerificationPage({super.key});
-
+  OtpVerificationPage({super.key, required this.verifictionid});
+  String verifictionid;
   bool passwordvisible = false;
   GlobalKey<FormState> otpkey = GlobalKey<FormState>();
   TextEditingController otp_controller = TextEditingController();
@@ -83,6 +86,7 @@ class OtpVerificationPage extends StatelessWidget {
                           }
                           return null;
                         },
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           filled: true,
                           fillColor: const Color.fromARGB(255, 240, 238, 238),
@@ -155,8 +159,18 @@ class OtpVerificationPage extends StatelessWidget {
     );
   }
 
-  verify(String otp, context) {
+  verify(String otp, context) async {
     if (otpkey.currentState!.validate()) {
+      try {
+        PhoneAuthCredential credential = await PhoneAuthProvider.credential(
+            verificationId: verifictionid, smsCode: otp_controller.text);
+        FirebaseAuth.instance.signInWithCredential(credential).then((value) {
+          return Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+        });
+      } catch (x) {
+        log(x.toString());
+      }
     } else {
       const messege = 'Please Enter OTP Number';
       IconSnackBar.show(context,
