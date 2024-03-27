@@ -1,13 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/otp_verification.dart';
 
 TextEditingController phoneNumberotpcontroller = TextEditingController();
 
+// ignore: must_be_immutable
 class SignupPage extends StatelessWidget {
   SignupPage({super.key});
 
@@ -121,7 +119,7 @@ class SignupPage extends StatelessWidget {
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         controller: phoneNumberotpcontroller,
                         validator: (value) {
-                          if (value!.isEmpty) {
+                          if (value!.length != 10) {
                             return 'Please Enter Phone Number';
                           }
                           return null;
@@ -133,8 +131,8 @@ class SignupPage extends StatelessWidget {
                           fillColor: const Color.fromARGB(255, 240, 238, 238),
                           prefixIcon: const Icon(Icons.phone),
                           prefixText: '+91',
-                          prefixStyle:
-                              TextStyle(color: Colors.black, fontSize: 16.5),
+                          prefixStyle: const TextStyle(
+                              color: Colors.black, fontSize: 16.6),
                           hintText: 'Phone Number',
                           hintStyle: const TextStyle(
                               fontFamily: 'Kalliyath1',
@@ -332,9 +330,44 @@ class SignupPage extends StatelessWidget {
     );
   }
 
-  signup(context) {
+  signup(context) async {
+    final data = await getAllDocuments();
     if (formkey.currentState!.validate()) {
-      auth(context);
+      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+      //     builder: (ctx) => OtpVerificationPage(
+      //           phoneNumber: '+91${phoneNumberotpcontroller.text.trim()}',
+      //           otptocken: 2,
+      //           verifictionid: 'sdf',
+      // )));
+      bool istrue = data.any((element) =>
+          element['Phone Number'] == phoneNumberotpcontroller.text);
+      if (passwordcontroller.text.trim() !=
+          confirmPasswordcontroller.text.trim()) {
+        const messege = 'Please Confirm Your Password';
+        IconSnackBar.show(context,
+            duration: const Duration(seconds: 2),
+            snackBarType: SnackBarType.alert,
+            label: messege);
+      } else if (istrue) {
+        const messege = 'Phone Number Already Exist';
+        IconSnackBar.show(context,
+            duration: const Duration(seconds: 2),
+            snackBarType: SnackBarType.alert,
+            label: messege);
+      } else {
+        final data = {
+          'Username': usernamecontroller.text.trim(),
+          'Phone Number': phoneNumberotpcontroller.text.trim(),
+          'Password': passwordcontroller.text.trim(),
+          'RePassword': confirmPasswordcontroller.text.trim()
+        };
+        otpSignin(context, data);
+        const messege = 'Please wait';
+        IconSnackBar.show(context,
+            duration: const Duration(seconds: 2),
+            snackBarType: SnackBarType.alert,
+            label: messege);
+      }
     } else {
       const messege = 'Please Fill The Form';
       IconSnackBar.show(context,
@@ -342,16 +375,5 @@ class SignupPage extends StatelessWidget {
           snackBarType: SnackBarType.alert,
           label: messege);
     }
-  }
-
-  addfirebase() async {
-    final data = {
-      'Username': usernamecontroller.text.trim(),
-      'Phone Number': phoneNumberotpcontroller.text.trim(),
-      'Password': passwordcontroller.text.trim(),
-      'RePassword': confirmPasswordcontroller.text.trim()
-    };
-    await firedata.add(data);
-    print('success');
   }
 }

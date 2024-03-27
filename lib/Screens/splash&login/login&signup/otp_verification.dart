@@ -1,18 +1,47 @@
+import 'dart:async';
 import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icon_snackbar/flutter_icon_snackbar.dart';
 import 'package:kalliyath_villa/Screens/Homescreen/homescreen.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
 
-class OtpVerificationPage extends StatelessWidget {
-  OtpVerificationPage({super.key, required this.verifictionid});
+class OtpVerificationPage extends StatefulWidget {
+  OtpVerificationPage(
+      {super.key,
+      required this.verifictionid,
+      required this.otptocken,
+      required this.phoneNumber,
+      required this.data});
   String verifictionid;
+  String phoneNumber;
+  int otptocken;
+  final data;
+
+  @override
+  State<OtpVerificationPage> createState() => _OtpVerificationPageState();
+}
+
+class _OtpVerificationPageState extends State<OtpVerificationPage> {
   bool passwordvisible = false;
+
   GlobalKey<FormState> otpkey = GlobalKey<FormState>();
+
   TextEditingController otp_controller = TextEditingController();
   @override
+  void initState() {
+    startCountdownTimer((int secondsRemaining) {
+      print(
+          secondsRemaining); // You can replace this with any action you want to perform on each tick
+      seconds = secondsRemaining;
+    });
+    super.initState();
+  }
+
+  int seconds = 30;
+  @override
   Widget build(BuildContext context) {
+    print('verif=${widget.verifictionid}');
     final size = MediaQuery.of(context).size;
     return Scaffold(
       body: SingleChildScrollView(
@@ -136,15 +165,30 @@ class OtpVerificationPage extends StatelessWidget {
                       SizedBox(
                         height: size.height / 50,
                       ),
-                      const Center(
-                        child: Text(
-                          'Re-send code in 0:24',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'Kalliyath1',
-                              fontWeight: FontWeight.w400),
-                        ),
-                      ),
+                      seconds == 0
+                          ? GestureDetector(
+                              onTap: () {
+                                resendOTP(widget.phoneNumber, context);
+                              },
+                              child: const Center(
+                                child: Text(
+                                  'Re-send code',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontFamily: 'Kalliyath1',
+                                      fontWeight: FontWeight.w400),
+                                ),
+                              ),
+                            )
+                          : Center(
+                              child: Text(
+                                'Re-send code in $seconds',
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'Kalliyath1',
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ),
                       SizedBox(
                         height: size.height / 50,
                       ),
@@ -162,9 +206,12 @@ class OtpVerificationPage extends StatelessWidget {
   verify(String otp, context) async {
     if (otpkey.currentState!.validate()) {
       try {
-        PhoneAuthCredential credential = await PhoneAuthProvider.credential(
-            verificationId: verifictionid, smsCode: otp_controller.text);
-        FirebaseAuth.instance.signInWithCredential(credential).then((value) {
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+            verificationId: widget.verifictionid, smsCode: otp_controller.text);
+        FirebaseAuth.instance
+            .signInWithCredential(credential)
+            .then((value) async {
+          await firedata.add(widget.data);
           return Navigator.of(context)
               .push(MaterialPageRoute(builder: (ctx) => HomeScreen()));
         });
@@ -178,5 +225,42 @@ class OtpVerificationPage extends StatelessWidget {
           snackBarType: SnackBarType.alert,
           label: messege);
     }
+  }
+
+  void resendOTP(String phoneNumber, BuildContext context) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    await auth.verifyPhoneNumber(
+      forceResendingToken: widget.otptocken,
+      phoneNumber: phoneNumber,
+      timeout: const Duration(seconds: 30),
+      verificationCompleted: (PhoneAuthCredential credential) {
+        auth.signInWithCredential(credential).then((value) {
+          Navigator.of(context)
+              .push(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+        });
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        print('Resend failed: ${e.message}');
+      },
+      codeSent: (String verificationId, int? resendToken) {},
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  void startCountdownTimer(Function(int) callback) {
+    int secondsRemaining = 30;
+
+    Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      if (secondsRemaining == 0) {
+        timer.cancel();
+      } else {
+        setState(() {
+          secondsRemaining--;
+          callback(secondsRemaining);
+        });
+        // Call the callback function with remaining seconds
+      }
+    });
   }
 }
