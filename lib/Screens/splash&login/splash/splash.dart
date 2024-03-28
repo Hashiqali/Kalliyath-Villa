@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/login/login.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/login.dart';
 
 SplashLoginBloc bloc1 = SplashLoginBloc();
 

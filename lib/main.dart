@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
-import 'package:kalliyath_villa/firebase_options.dart';
+import 'package:kalliyath_villa/Screens/firebase/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

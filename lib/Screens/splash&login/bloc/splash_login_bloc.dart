@@ -9,6 +9,9 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
     on<InitialfetchEvent>(initialfetchEvent);
     on<ObscureEvent>(obscureEvent);
     on<SwitchFunction>(switchFunction);
+    on<LoginToSignupEvent>(loginToSignupEvent);
+    on<OtpTimerEvent>(otpTimerEvent);
+    on<OtpTimerDoneEvent>(otpTimerDoneEvent);
   }
 
   FutureOr<void> initialfetchEvent(
@@ -19,7 +22,7 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
 
   FutureOr<void> obscureEvent(
       ObscureEvent event, Emitter<SplashLoginState> emit) {
-    if (state is ObscureText) {
+    if (event.istrue == true) {
       emit(NotObscureText());
     } else {
       emit(ObscureText());
@@ -33,5 +36,20 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
     } else {
       emit(SwitchON());
     }
+  }
+
+  FutureOr<void> loginToSignupEvent(
+      LoginToSignupEvent event, Emitter<SplashLoginState> emit) {
+    emit(NavigateTosignup());
+  }
+
+  FutureOr<void> otpTimerEvent(
+      OtpTimerEvent event, Emitter<SplashLoginState> emit) {
+    emit(OtpTimerState());
+  }
+
+  FutureOr<void> otpTimerDoneEvent(
+      OtpTimerDoneEvent event, Emitter<SplashLoginState> emit) {
+    emit(OtpTimerDoneState());
   }
 }
