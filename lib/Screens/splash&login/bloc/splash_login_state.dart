@@ -23,3 +23,4 @@ class OtpTimerState extends SplashLoginState {}
 
 class OtpTimerDoneState extends SplashLoginState {}
 
+class LoginUpdatestate extends SplashLoginState{}

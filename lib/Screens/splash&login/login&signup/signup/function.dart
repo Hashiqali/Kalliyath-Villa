@@ -1,13 +1,13 @@
+import 'package:kalliyath_villa/Screens/firebase/functions.dart';
 import 'package:kalliyath_villa/Screens/snackbar_widget.dart/widget.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
 
 signup(
     {context, formkey, username, phonenumber, password, cnfmpassword}) async {
-  final data = await getAllDocuments();
   if (formkey.currentState!.validate()) {
-    bool istrue =
-        data.any((element) => element['Phone Number'] == '+91$phonenumber');
-        
+    bool istrue = signupDocuments
+        .any((element) => element['Phone Number'] == '+91$phonenumber');
+
     if (password != cnfmpassword) {
       snackbarAlert(context, 'Please Confirm Your Password');
     } else if (istrue) {

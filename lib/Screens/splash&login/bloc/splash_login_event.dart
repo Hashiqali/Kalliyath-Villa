@@ -17,3 +17,5 @@ class OtpTimerDoneEvent extends SplashLoginEvent {}
 class SwitchFunction extends SplashLoginEvent {}
 
 class LoginToSignupEvent extends SplashLoginEvent {}
+
+class LoginUpdateEvent extends SplashLoginEvent {}

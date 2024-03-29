@@ -29,8 +29,10 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   bloc: ^8.1.4
+  cached_network_image: ^3.3.1
   cloud_firestore: ^4.15.9
   cupertino_icons: ^1.0.6
+  dot_navigation_bar: ^1.0.2
   eva_icons_flutter: ^3.1.0
   firebase_auth: ^4.17.9
   firebase_core: ^2.27.1
@@ -69,6 +71,13 @@ flutter:
       Beach Marbella _ Realista.jpeg
     - assets/images/Wall decoration Room decoration Home decor Floor deco
       Balcony design Home entrance decor Home entran.jpeg
+    - assets/images/user (1).png
+    - assets/images/luggage.png
+    - assets/images/question.png
+    - assets/images/privacy-policy.png
+    - assets/images/terms-and-conditions (1).png
+    - assets/images/info.png
+    - assets/images/log-out.png
   #   - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

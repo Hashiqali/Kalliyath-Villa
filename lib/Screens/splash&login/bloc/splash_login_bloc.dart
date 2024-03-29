@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/Screens/firebase/functions.dart';
 part 'splash_login_event.dart';
 part 'splash_login_state.dart';
 
@@ -12,10 +13,12 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
     on<LoginToSignupEvent>(loginToSignupEvent);
     on<OtpTimerEvent>(otpTimerEvent);
     on<OtpTimerDoneEvent>(otpTimerDoneEvent);
+    on<LoginUpdateEvent>(loginUpdateEvent);
   }
 
   FutureOr<void> initialfetchEvent(
       InitialfetchEvent event, Emitter<SplashLoginState> emit) async {
+    await getAllDocuments();
     await Future.delayed(const Duration(seconds: 3));
     emit(NavigateToLogin());
   }
@@ -51,5 +54,10 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
   FutureOr<void> otpTimerDoneEvent(
       OtpTimerDoneEvent event, Emitter<SplashLoginState> emit) {
     emit(OtpTimerDoneState());
+  }
+
+  FutureOr<void> loginUpdateEvent(
+      LoginUpdateEvent event, Emitter<SplashLoginState> emit) {
+    emit(LoginUpdatestate());
   }
 }

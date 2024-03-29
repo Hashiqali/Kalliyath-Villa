@@ -1,11 +1,13 @@
+import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kalliyath_villa/Screens/Homescreen/homescreen.dart';
+import 'package:kalliyath_villa/Screens/firebase/functions.dart';
+import 'package:kalliyath_villa/Screens/mainscreen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/snackbar_widget.dart/widget.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/otpVerification/otp_verification.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/signup/signup.dart';
 
 final CollectionReference signupdata =
     FirebaseFirestore.instance.collection('signup');
@@ -42,9 +44,8 @@ googleSigning(context) async {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    final val = await getAllDocuments();
-    final istrue =
-        val.any((element) => element['Email'] == userCredential.user?.email);
+    final istrue = signupDocuments
+        .any((element) => element['Email'] == userCredential.user?.email);
 
     if (!istrue) {
       final data = {
@@ -54,11 +55,15 @@ googleSigning(context) async {
         'Image': userCredential.user?.photoURL
       };
       await signupdata.add(data);
+      await getAllDocuments();
+      snackbarSucess(context, 'Success');
       Navigator.of(context).pop();
     } else {
       snackbarAlert(context, 'Google Account Already Exist');
     }
-  } catch (e) {}
+  } catch (e) {
+    log(e.toString());
+  }
 }
 
 googlelogin(context) async {
@@ -71,35 +76,22 @@ googlelogin(context) async {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    final val = await getAllDocuments();
-    final istrue =
-        val.any((element) => element['Email'] == userCredential.user?.email);
+    final istrue = signupDocuments
+        .any((element) => element['Email'] == userCredential.user?.email);
+
+    final id = signupDocuments.firstWhere(
+        (element) => element['Email'] == userCredential.user?.email);
 
     if (istrue) {
+      snackbarSucess(context, 'Success');
+      await Future.delayed(const Duration(seconds: 1));
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+          .pushReplacement(MaterialPageRoute(builder: (ctx) => ManiScreen()));
+      UserprofileUpdate(id['id']);
     } else {
       snackbarAlert(context, 'Google Account Doesn\'t Exist');
     }
-  } catch (e) {}
-}
-
-Future<List<Map<String, dynamic>>> getAllDocuments() async {
-  final CollectionReference firedata =
-      FirebaseFirestore.instance.collection('signup');
-
-  QuerySnapshot querySnapshot = await firedata.get();
-
-  List<Map<String, dynamic>> dataList = [];
-
-  for (var doc in querySnapshot.docs) {
-    if (doc.exists) {
-      Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-      if (data != null) {
-        dataList.add(data);
-      }
-    }
+  } catch (e) {
+    log(e.toString());
   }
-
-  return dataList;
 }

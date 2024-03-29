@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/changePassTile.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/functions.dart';
 
@@ -120,9 +122,7 @@ class ForgotPhoneNumberPage extends StatelessWidget {
                           child: InkWell(
                             splashColor:
                                 const Color.fromARGB(121, 129, 128, 128),
-                            onTap: () {
-                              // Navigator.of(context).push(MaterialPageRoute(
-                              //     builder: (ctx) => ChangePasswordTile(phoneNumber:phoneNumbercontroller.text ,)));
+                            onTap: () async {
                               forgot(context, phoneNumberkey,
                                   phoneNumbercontroller.text.trim());
                             },
