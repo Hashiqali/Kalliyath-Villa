@@ -1,15 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/phoneNumber.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/ForgotPassword/phoneNumber.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/googleLogin.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/otpVerification/otp_verification.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
 
+bool switchON = false;
 Widget formTile({context, key, size, phonenumber, password}) {
   return Form(
     key: key,
@@ -117,7 +115,7 @@ Widget formTile({context, key, size, phonenumber, password}) {
                   BlocBuilder<SplashLoginBloc, SplashLoginState>(
                     bloc: bloc1,
                     builder: (context, state) {
-                      bool istrue = false;
+                      bool istrue = switchON;
                       if (state is SwitchON) {
                         istrue = false;
                       } else if (state is SwitchOFF) {
@@ -133,6 +131,7 @@ Widget formTile({context, key, size, phonenumber, password}) {
                           value: istrue,
                           onChanged: (value) {
                             bloc1.add(SwitchFunction());
+                            switchON = value;
                           });
                     },
                   ),

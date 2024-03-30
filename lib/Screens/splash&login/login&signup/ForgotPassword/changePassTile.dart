@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/functions.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/ForgotPassword/functions.dart';
 
 class ChangePasswordTile extends StatelessWidget {
   ChangePasswordTile({super.key, required this.phoneNumber});

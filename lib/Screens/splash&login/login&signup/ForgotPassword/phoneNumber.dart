@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/changePassTile.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/functions.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/ForgotPassword/changePassTile.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/ForgotPassword/functions.dart';
 
 class ForgotPhoneNumberPage extends StatelessWidget {
   ForgotPhoneNumberPage({super.key});

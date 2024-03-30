@@ -4,13 +4,19 @@ import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/formTile.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/signup/signup.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List signupList = [];
 
 // ignore: must_be_immutable
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   bool passwordvisible = false;
 
   GlobalKey<FormState> loginkey = GlobalKey<FormState>();
@@ -18,6 +24,13 @@ class LoginPage extends StatelessWidget {
   TextEditingController phonenumbercontroller = TextEditingController();
 
   TextEditingController passwordcontroller = TextEditingController();
+  @override
+  void initState() {
+    if (switchON) {
+      init();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,5 +118,11 @@ class LoginPage extends StatelessWidget {
         );
       },
     );
+  }
+
+  init() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    phonenumbercontroller.text = prefs.getString('Phone Number')!;
+    passwordcontroller.text = prefs.getString('Password')!;
   }
 }

@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/firebase/functions.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 part 'splash_login_event.dart';
 part 'splash_login_state.dart';
 
@@ -20,7 +22,14 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
       InitialfetchEvent event, Emitter<SplashLoginState> emit) async {
     await getAllDocuments();
     await Future.delayed(const Duration(seconds: 3));
-    emit(NavigateToLogin());
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? istrue = prefs.getBool('User');
+    if (istrue != null) {
+      userprofileUpdate();
+      emit(NavigateToHome());
+    } else {
+      emit(NavigateToLogin());
+    }
   }
 
   FutureOr<void> obscureEvent(

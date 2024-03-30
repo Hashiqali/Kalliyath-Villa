@@ -7,6 +7,7 @@ import 'package:kalliyath_villa/Screens/firebase/functions.dart';
 import 'package:kalliyath_villa/Screens/mainscreen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/snackbar_widget.dart/widget.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
+
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/otpVerification/otp_verification.dart';
 
 final CollectionReference signupdata =
@@ -56,6 +57,7 @@ googleSigning(context) async {
       };
       await signupdata.add(data);
       await getAllDocuments();
+
       snackbarSucess(context, 'Success');
       Navigator.of(context).pop();
     } else {
@@ -79,19 +81,19 @@ googlelogin(context) async {
     final istrue = signupDocuments
         .any((element) => element['Email'] == userCredential.user?.email);
 
-    final id = signupDocuments.firstWhere(
+    final data = signupDocuments.firstWhere(
         (element) => element['Email'] == userCredential.user?.email);
 
     if (istrue) {
       snackbarSucess(context, 'Success');
       await Future.delayed(const Duration(seconds: 1));
+      await addMultipleData(data['Phone Number'] ?? '', data['Passeord'] ?? '',
+          data['Username'] ?? '', data['Image'] ?? '');
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (ctx) => ManiScreen()));
-      UserprofileUpdate(id['id']);
-    } else {
-      snackbarAlert(context, 'Google Account Doesn\'t Exist');
+      userprofileUpdate();
     }
   } catch (e) {
-    log(e.toString());
+    snackbarAlert(context, 'Google Account Doesn\'t Exist');
   }
 }

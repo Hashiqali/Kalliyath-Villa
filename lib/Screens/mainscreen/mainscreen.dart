@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/Homescreen/homescreen.dart';
-import 'package:kalliyath_villa/Screens/firebase/functions.dart';
 import 'package:kalliyath_villa/Screens/profile/profile.dart';
 import 'package:kalliyath_villa/Screens/saved/saved_page.dart';
-import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
-import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
 
 class ManiScreen extends StatefulWidget {
   ManiScreen({super.key});
@@ -12,8 +9,6 @@ class ManiScreen extends StatefulWidget {
   @override
   State<ManiScreen> createState() => _ManiScreenState();
 }
-
-int currentidx = 0;
 
 Map<String, dynamic> value = {};
 List<Widget> _widgetOptions = <Widget>[
@@ -23,6 +18,7 @@ List<Widget> _widgetOptions = <Widget>[
 ];
 
 class _ManiScreenState extends State<ManiScreen> {
+  int currentidx = 0;
   @override
   void initState() {
     super.initState();

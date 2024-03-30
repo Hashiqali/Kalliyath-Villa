@@ -9,7 +9,7 @@ import 'package:kalliyath_villa/Screens/mainscreen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/snackbar_widget.dart/widget.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/authentication/authentication.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/ForgotPassword/changePassTile.dart';
+import 'package:kalliyath_villa/Screens/splash&login/login&signup/ForgotPassword/changePassTile.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
 
@@ -29,9 +29,11 @@ otpverify(
           .signInWithCredential(credential)
           .then((value) async {
         if (istrue != true) {
-          final id = await signupdata.add(data);
+          signupdata.add(data);
           await getAllDocuments();
-          UserprofileUpdate(id.id);
+          await addMultipleData(
+              phoneNumber.substring(3), data['Password'], data['Username'], '');
+          bloc1.add(LoginUpdateEvent());
           return Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (ctx) => ManiScreen()),
             (route) => false,

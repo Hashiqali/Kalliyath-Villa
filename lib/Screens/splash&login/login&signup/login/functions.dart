@@ -4,6 +4,7 @@ import 'package:kalliyath_villa/Screens/mainscreen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/snackbar_widget.dart/widget.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 login(key, context, phoneNumber, password) async {
   if (key.currentState!.validate()) {
@@ -22,10 +23,12 @@ login(key, context, phoneNumber, password) async {
       snackbarAlert(context, 'Incorrect Phone Number');
     } else if (istrue2) {
       snackbarSucess(context, 'Success');
+      userprofileUpdate();
       await Future.delayed(const Duration(seconds: 2));
+      await addMultipleData(phoneNumber.substring(3), password,
+          values['Username'], values['Image'] ?? '');
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (ctx) => ManiScreen()));
-      UserprofileUpdate(values['id']);
     } else {
       snackbarAlert(context, 'Incorrect Password');
     }
@@ -35,7 +38,30 @@ login(key, context, phoneNumber, password) async {
 }
 
 Map<String, dynamic> userData = {};
-UserprofileUpdate(String id) {
-  userData = signupDocuments.firstWhere((element) => element['id'] == id);
+userprofileUpdate() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  final data = {
+    'Username': prefs.getString('Username'),
+    'Image': prefs.getString('Image')
+  };
+  userData = data;
+  // userData = signupDocuments.firstWhere((element) => element['id'] == id);
   bloc1.add(LoginUpdateEvent());
+}
+
+Future<void> addMultipleData(
+    phoneNumber, password, username, image) async {
+  print('username iss========$username');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  await prefs.remove('Phone Number');
+  await prefs.remove('Password');
+  await prefs.remove('Username');
+  await prefs.remove('Image');
+  await prefs.setBool('User', true);
+  await prefs.setString('Phone Number', phoneNumber);
+  await prefs.setString('Password', password);
+  await prefs.setString('Username', username);
+  await prefs.setString('Image', image ?? '');
+  userprofileUpdate();
 }

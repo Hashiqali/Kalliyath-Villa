@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kalliyath_villa/Screens/mainscreen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/login.dart';
 
@@ -28,6 +29,9 @@ class _SplashScreenState extends State<SplashScreen> {
         if (state is NavigateToLogin) {
           Navigator.of(context).pushReplacement(
               MaterialPageRoute(builder: (ctx) => LoginPage()));
+        } else if (state is NavigateToHome) {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (ctx) => ManiScreen()));
         }
       },
       builder: (context, state) {

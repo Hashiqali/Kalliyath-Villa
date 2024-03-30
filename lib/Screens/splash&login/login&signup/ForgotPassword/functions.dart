@@ -37,9 +37,10 @@ changePassword(context, formkey, password, repassword, phonenumber) async {
       signupdata.doc(data['id']).update(value);
       await getAllDocuments();
       snackbarSucess(context, 'Success');
+      await addMultipleData(phonenumber.substring(3), password, 
+          data['Username'], data['Image'] ?? '');
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (ctx) => ManiScreen()), (route) => false);
-      UserprofileUpdate(data['id']);
     } else {
       snackbarAlert(context, 'Please Confirm Your Password');
     }

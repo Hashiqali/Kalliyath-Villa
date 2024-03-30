@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/profile/ProfiteTile.dart';
 import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
 import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/login.dart';
 import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfilePage extends StatefulWidget {
   ProfilePage({
@@ -20,8 +20,6 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
-    print(userData['Username']);
-    print(userData['Image']);
     final size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
@@ -39,38 +37,24 @@ class _ProfilePageState extends State<ProfilePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        userData['Image'] != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: CachedNetworkImage(
-                                  height: 100,
-                                  fit: BoxFit.cover,
-                                  width: 100,
-                                  imageUrl: userData['Image'],
-                                  placeholder: (context, url) =>
-                                      const CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
-                                ),
-                              )
-                            : const CircleAvatar(
-                                backgroundColor:
-                                    Color.fromARGB(255, 39, 39, 39),
-                                backgroundImage:
-                                    AssetImage('assets/images/user (1).png'),
-                                radius: 47,
-                              ),
-                        // CircleAvatar(
-                        //   backgroundColor:
-                        //       const Color.fromARGB(255, 39, 39, 39),
-                        //   backgroundImage:
-                        //   userData['Image'] != null
-                        //       ?
-                        //       NetworkImage(userData['Image'])
-                        //       : const AssetImage('assets/images/user (1).png')
-                        //           as ImageProvider,
-                        //   radius: 47,
-                        // ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: CachedNetworkImage(
+                            height: 100,
+                            fit: BoxFit.cover,
+                            width: 100,
+                            imageUrl: userData['Image'],
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const CircleAvatar(
+                              backgroundColor: Color.fromARGB(255, 39, 39, 39),
+                              backgroundImage:
+                                  AssetImage('assets/images/user (1).png'),
+                              radius: 47,
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.only(top: 5),
                           child: Text(
@@ -100,43 +84,47 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               children: [
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/user (1).png',
                     size: size,
                     text: 'Personal Information',
                     istrue: false),
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/luggage.png',
                     size: size,
                     text: 'Bookings',
                     istrue: false),
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/question.png',
                     size: size,
                     text: 'Contact Customer Service',
                     istrue: false),
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/privacy-policy.png',
                     size: size,
                     text: 'Privacy and Policy',
                     istrue: false),
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/terms-and-conditions (1).png',
                     size: size,
                     text: 'Terms and Conditions',
                     istrue: false),
                 ProfieTile(
-                    function: ErrorWidget.builder,
+                    function: () {},
                     image: 'assets/images/info.png',
                     size: size,
                     text: 'About',
                     istrue: false),
                 ProfieTile(
-                    function: () {
+                    function: () async {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.remove('User');
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushAndRemoveUntil(
                           (MaterialPageRoute(builder: (ctx) => LoginPage())),
                           (route) => false);
