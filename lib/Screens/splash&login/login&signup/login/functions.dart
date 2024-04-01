@@ -8,29 +8,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 login(key, context, phoneNumber, password) async {
   if (key.currentState!.validate()) {
-    final istrue1 = signupDocuments
+    final userExists = signupDocuments
         .any((element) => element['Phone Number'] == phoneNumber);
+    final passwordCorrect = signupDocuments.any((element) =>
+        element['Phone Number'] == phoneNumber &&
+        element['Password'] == password);
 
-    final istrue2 = signupDocuments.any((element) =>
-        element['Phone Number'] == phoneNumber &&
-        element['Password'] == password);
-    final values = signupDocuments.firstWhere((element) =>
-        element['Phone Number'] == phoneNumber &&
-        element['Password'] == password);
-    if (!istrue1) {
-      snackbarAlert(context, 'Incorrect Phone Number & Password');
-    } else if (!istrue1) {
+    if (!userExists) {
       snackbarAlert(context, 'Incorrect Phone Number');
-    } else if (istrue2) {
-      snackbarSucess(context, 'Success');
-      userprofileUpdate();
-      await Future.delayed(const Duration(seconds: 2));
-      await addMultipleData(phoneNumber.substring(3), password,
-          values['Username'], values['Image'] ?? '');
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (ctx) => ManiScreen()));
-    } else {
+    } else if (!passwordCorrect) {
       snackbarAlert(context, 'Incorrect Password');
+    } else {
+      snackbarSucess(context, 'Success');
+
+      final userData = signupDocuments.firstWhere((element) =>
+          element['Phone Number'] == phoneNumber &&
+          element['Password'] == password);
+
+      await Future.delayed(const Duration(seconds: 2));
+      await adduserdata(phoneNumber.substring(3), password,
+          userData['Username'], userData['Image'] ?? '');
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (ctx) => ManiScreen()), (route) => false);
     }
   } else {
     snackbarAlert(context, 'Enter Username & Password');
@@ -40,17 +39,17 @@ login(key, context, phoneNumber, password) async {
 Map<String, dynamic> userData = {};
 userprofileUpdate() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  final data = {
+
+  final data = await {
     'Username': prefs.getString('Username'),
     'Image': prefs.getString('Image')
   };
   userData = data;
-  // userData = signupDocuments.firstWhere((element) => element['id'] == id);
+
   bloc1.add(LoginUpdateEvent());
 }
 
-Future<void> addMultipleData(
-    phoneNumber, password, username, image) async {
+Future<void> adduserdata(phoneNumber, password, username, image) async {
   print('username iss========$username');
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
@@ -63,5 +62,5 @@ Future<void> addMultipleData(
   await prefs.setString('Password', password);
   await prefs.setString('Username', username);
   await prefs.setString('Image', image ?? '');
-  userprofileUpdate();
+  await userprofileUpdate();
 }

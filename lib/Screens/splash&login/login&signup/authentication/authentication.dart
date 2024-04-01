@@ -87,7 +87,7 @@ googlelogin(context) async {
     if (istrue) {
       snackbarSucess(context, 'Success');
       await Future.delayed(const Duration(seconds: 1));
-      await addMultipleData(data['Phone Number'] ?? '', data['Passeord'] ?? '',
+      await adduserdata(data['Phone Number'] ?? '', data['Passeord'] ?? '',
           data['Username'] ?? '', data['Image'] ?? '');
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (ctx) => ManiScreen()));

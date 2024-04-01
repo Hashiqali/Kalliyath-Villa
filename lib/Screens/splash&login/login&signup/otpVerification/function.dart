@@ -31,9 +31,9 @@ otpverify(
         if (istrue != true) {
           signupdata.add(data);
           await getAllDocuments();
-          await addMultipleData(
+          await adduserdata(
               phoneNumber.substring(3), data['Password'], data['Username'], '');
-          bloc1.add(LoginUpdateEvent());
+
           return Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (ctx) => ManiScreen()),
             (route) => false,
@@ -46,6 +46,8 @@ otpverify(
                     )),
           );
         }
+      }).catchError((e) {
+        snackbarAlert(context, 'Incorrect OTP');
       });
     } catch (x) {
       log(x.toString());

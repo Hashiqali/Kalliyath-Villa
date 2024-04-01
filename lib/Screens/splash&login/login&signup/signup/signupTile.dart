@@ -10,7 +10,7 @@ SplashLoginBloc _bloc1 = SplashLoginBloc();
 signupTile(
     {context, username, phonenumber, password, cnfmpassword, size, formkey}) {
   return Padding(
-    padding: const EdgeInsets.all(15),
+    padding: const EdgeInsets.only(left: 15, right: 15),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -117,23 +117,27 @@ signupTile(
                 if (value!.isEmpty) {
                   return 'Please Enter Password';
                 }
+                if (value.length < 8) {
+                  return 'Password must be at least 8 characters long';
+                }
                 return null;
               },
               obscureText: istrue,
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.lock),
                 suffixIcon: IconButton(
-                    onPressed: () {
-                      _bloc.add(ObscureEvent(istrue: istrue));
-                    },
-                    icon:
-                        Icon(istrue ? Icons.visibility : Icons.visibility_off)),
+                  onPressed: () {
+                    _bloc.add(ObscureEvent(istrue: istrue));
+                  },
+                  icon: Icon(istrue ? Icons.visibility : Icons.visibility_off),
+                ),
                 filled: true,
                 fillColor: const Color.fromARGB(255, 240, 238, 238),
                 hintText: 'Password',
                 hintStyle: const TextStyle(
-                    fontFamily: 'Kalliyath1',
-                    color: Color.fromARGB(210, 158, 158, 158)),
+                  fontFamily: 'Kalliyath1',
+                  color: Color.fromARGB(210, 158, 158, 158),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
                 ),
@@ -167,7 +171,10 @@ signupTile(
               validator: (value) {
                 if (value!.isEmpty) {
                   return 'Please Enter Confirm Password';
+                } else if (value.length < 8) {
+                  return 'Password must be at least 8 characters long';
                 }
+
                 return null;
               },
               obscureText: istrue,
@@ -232,9 +239,41 @@ signupTile(
           ),
         ),
         SizedBox(
-          height: size.height / 50,
+          height: size.height / 65,
         ),
         googleButton(context: context, size: size, istrue: true),
+        SizedBox(
+          height: size.height / 100,
+        ),
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Already have an account! ',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Kalliyath1',
+                        fontWeight: FontWeight.w400),
+                  ),
+                  Text(
+                    'Login',
+                    style: TextStyle(
+                        color: Color.fromARGB(255, 50, 217, 55),
+                        fontFamily: 'Kalliyath1',
+                        fontWeight: FontWeight.w400),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     ),
   );

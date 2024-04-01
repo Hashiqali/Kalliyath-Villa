@@ -168,9 +168,11 @@ Widget formTile({context, key, size, phonenumber, password}) {
             color: Colors.transparent,
             child: InkWell(
               splashColor: const Color.fromARGB(121, 129, 128, 128),
-              onTap: () {
+              onTap: (){
+                
                 login(key, context, '+91${phonenumber.text.trim()}',
                     password.text.trim());
+                    
               },
               child: Container(
                 height: size.height / 15,

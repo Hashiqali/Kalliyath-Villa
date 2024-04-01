@@ -120,15 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     text: 'About',
                     istrue: false),
                 ProfieTile(
-                    function: () async {
-                      SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.remove('User');
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushAndRemoveUntil(
-                          (MaterialPageRoute(builder: (ctx) => LoginPage())),
-                          (route) => false);
-                    },
+                    function: () {},
                     image: 'assets/images/log-out.png',
                     size: size,
                     text: 'Logout',
@@ -140,4 +132,6 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+  
 }
