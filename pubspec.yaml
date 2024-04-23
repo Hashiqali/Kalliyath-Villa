@@ -40,8 +40,13 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.5
+  flutter_carousel_widget: ^2.2.0
   flutter_icon_snackbar: ^1.1.7
+  flutter_map: ^6.1.0
+  flutter_rating_stars: ^1.0.3+4
+  google_maps_flutter: ^2.6.1
   google_sign_in: ^6.2.1
+  latlong2: ^0.9.1
   shared_preferences: ^2.2.2
 
 dev_dependencies:
@@ -79,7 +84,16 @@ flutter:
     - assets/images/terms-and-conditions (1).png
     - assets/images/info.png
     - assets/images/log-out.png
-  #   - images/a_dot_ham.jpeg
+    - assets/images/facilities/air-conditioner.png
+    - assets/images/facilities/dumbbell.png
+    - assets/images/facilities/wi-fi.png
+    - assets/images/facilities/massage.png
+    - assets/images/facilities/parking-area.png
+    - assets/images/facilities/playground.png
+    - assets/images/facilities/swimming.png
+    - assets/images/facilities/television.png
+    - assets/images/user.png
+  
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
   # For details regarding adding assets from package dependencies, see

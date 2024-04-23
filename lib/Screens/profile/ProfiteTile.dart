@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/login.dart';
+import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable

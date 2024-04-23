@@ -2,14 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/profile/ProfiteTile.dart';
-import 'package:kalliyath_villa/Screens/splash&login/bloc/splash_login_bloc.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/functions.dart';
-import 'package:kalliyath_villa/Screens/splash&login/login&signup/login/login.dart';
-import 'package:kalliyath_villa/Screens/splash&login/splash/splash.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
+import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/functions.dart';
+import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({
+  const ProfilePage({
     super.key,
   });
 
@@ -28,7 +26,6 @@ class _ProfilePageState extends State<ProfilePage> {
             bloc: bloc1,
             builder: (context, state) {
               if (state is LoginUpdatestate) {
-                print('====================Rebuilded ===============');
                 return Container(
                   color: const Color.fromARGB(255, 39, 39, 39),
                   child: Padding(
@@ -132,6 +129,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
-  
 }
