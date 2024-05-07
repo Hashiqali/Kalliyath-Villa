@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/login.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
-import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

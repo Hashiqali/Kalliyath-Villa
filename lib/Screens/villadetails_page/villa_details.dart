@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/details_tile/villa_details_tile.dart';
-import 'package:kalliyath_villa/Screens/villadetails_page/functions.dart';
+
 
 class VillaDetailsPage extends StatefulWidget {
   const VillaDetailsPage({

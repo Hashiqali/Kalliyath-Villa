@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/home_screen/homescreen.dart';
-import 'package:kalliyath_villa/Screens/profile/functions.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
 import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';

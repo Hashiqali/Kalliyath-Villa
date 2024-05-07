@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kalliyath_villa/Screens/booking_page/booking/add_date_person/add_tile.dart';
 import 'package:kalliyath_villa/Screens/booking_page/booking/add_details_person/add_details_tile.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
-import 'package:kalliyath_villa/widget/calendar_widget/calendar_widget.dart';
+
 
 class BookingSecondPage extends StatefulWidget {
   const BookingSecondPage(

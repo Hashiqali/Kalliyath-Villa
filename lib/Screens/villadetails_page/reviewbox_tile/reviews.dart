@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/bloc/details_bloc.dart';
-import 'package:kalliyath_villa/Screens/villadetails_page/details_tile/villa_details_tile.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/reviewbox_tile/functions.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/reviewbox_tile/review_tile.dart';
 import 'package:kalliyath_villa/colors/colors.dart';

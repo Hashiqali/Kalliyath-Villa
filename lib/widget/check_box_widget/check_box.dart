@@ -4,6 +4,7 @@ import 'package:kalliyath_villa/Screens/search/bloc/search_bloc.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 
+// ignore: must_be_immutable
 class CheckBoxWidget extends StatefulWidget {
   CheckBoxWidget(
       {super.key,
