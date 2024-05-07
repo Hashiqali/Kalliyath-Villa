@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/home_screen/homescreen.dart';
+import 'package:kalliyath_villa/Screens/profile/functions.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
-import 'package:kalliyath_villa/widget/snackbar.dart';
+import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
 import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/authentication/authentication.dart';
-import 'package:kalliyath_villa/Screens/splash_login/login_signup/forgot_password/changePassTile.dart';
+import 'package:kalliyath_villa/Screens/splash_login/login_signup/forgot_password/password_page/change_password_tile.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/functions.dart';
 import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
 
@@ -28,13 +29,17 @@ otpverify(
           .signInWithCredential(credential)
           .then((value) async {
         if (istrue != true) {
-          final id = await signupdata.add(data);
+          await signupdata.add(data);
           await getsignup();
-          await adduserdata(phoneNumber.substring(3), data['Password'],
-              data['Username'], '', id.id);
+          final nowsignup = signupDocuments
+              .firstWhere((element) => element['Phone Number'] == phoneNumber);
+
+
+          await adduserdata(nowsignup['Phone Number'], nowsignup['Password'],
+              nowsignup['Username'], '', nowsignup['id']);
 
           return Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(builder: (ctx) => ManiScreen()),
+            MaterialPageRoute(builder: (ctx) => const ManiScreen()),
             (route) => false,
           );
         } else {
@@ -66,12 +71,10 @@ void resendOTP(String phoneNumber, BuildContext context, otpToken) async {
     verificationCompleted: (PhoneAuthCredential credential) {
       auth.signInWithCredential(credential).then((value) {
         Navigator.of(context)
-            .push(MaterialPageRoute(builder: (ctx) => HomeScreen()));
+            .push(MaterialPageRoute(builder: (ctx) => const HomeScreen()));
       });
     },
-    verificationFailed: (FirebaseAuthException e) {
-      print('Resend failed: ${e.message}');
-    },
+    verificationFailed: (FirebaseAuthException e) {},
     codeSent: (String verificationId, int? resendToken) {},
     codeAutoRetrievalTimeout: (String verificationId) {},
   );

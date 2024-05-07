@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/home_screen/bloc/home_bloc.dart';
-import 'package:kalliyath_villa/Screens/home_screen/main_tile/home_tile.dart';
-import 'package:kalliyath_villa/Screens/home_screen/search/search_tile.dart';
-
-
+import 'package:kalliyath_villa/Screens/home_screen/home_tile/home_tile.dart';
+import 'package:kalliyath_villa/Screens/search/search.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
+import 'package:kalliyath_villa/style/textstyle.dart';
 
 final HomeBloc homebloc = HomeBloc();
 
@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    
     super.initState();
   }
 
@@ -29,22 +28,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final size = MediaQuery.of(context).size;
     return Stack(children: [
       Scaffold(
-          backgroundColor: const Color.fromARGB(255, 1, 10, 19),
+          backgroundColor: AppColors.darkblue,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
-            title: const Text(
+            title: Text(
               'Home',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontFamily: 'Kalliyath',
-                fontWeight: FontWeight.w400,
-              ),
+              style: apptextstyle(
+                  color: AppColors.white, size: 20, family: 'Kalliyath'),
             ),
             centerTitle: true,
           ),
           body: HomeTile(size: size)),
-      SearchTileWidget()
+      const Search()
     ]);
   }
 }

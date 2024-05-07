@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/reviewbox_tile/add_review/add_rating.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
+import 'package:kalliyath_villa/style/textstyle.dart';
 
 Future<void> writereviewdialogue(
     {required BuildContext context,
@@ -13,19 +15,15 @@ Future<void> writereviewdialogue(
         return Scaffold(
           backgroundColor: Colors.transparent,
           body: AlertDialog(
-            backgroundColor: Colors.black,
+            backgroundColor: const Color.fromARGB(255, 22, 22, 22),
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            title: const Center(
-              child: Text(
-                'Write a Review',
-                style: TextStyle(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 15,
-                  fontFamily: 'Kalliyath2',
-                  fontWeight: FontWeight.w200,
-                ),
-              ),
+            title: Center(
+              child: Text('Write a Review',
+                  style: apptextstyle(
+                      color: AppColors.white,
+                      size: 15,
+                      weight: FontWeight.w200)),
             ),
             content: SizedBox(
               width: size.width,
@@ -42,8 +40,7 @@ Future<void> writereviewdialogue(
                       return null;
                     },
                     maxLines: null,
-                    style: const TextStyle(
-                        color: Colors.white), // Set text color to white
+                    style: const TextStyle(color: AppColors.white),
                     decoration: InputDecoration(
                       fillColor: const Color.fromARGB(255, 240, 238, 238),
                       labelText: 'Review',
@@ -58,7 +55,7 @@ Future<void> writereviewdialogue(
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10.0),
                         borderSide: const BorderSide(
-                          color: Colors.white,
+                          color: AppColors.white,
                           width: 2.0,
                         ),
                       ),
@@ -70,30 +67,22 @@ Future<void> writereviewdialogue(
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                child: const Text(
-                  'Cancel',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 13,
-                    fontFamily: 'Kalliyath2',
-                    fontWeight: FontWeight.w200,
-                  ),
-                ),
+                child: Text('Cancel',
+                    style: apptextstyle(
+                        color: AppColors.white,
+                        size: 13,
+                        weight: FontWeight.w200)),
               ),
               TextButton(
                 onPressed: () {
-                  submit(reviewcontroller.text.trim(), formkey, details['id'],
-                      context, size, details);
+                  submit(reviewcontroller, formkey, details['id'], context,
+                      size, details);
                 },
-                child: const Text(
-                  'Submit',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 13,
-                    fontFamily: 'Kalliyath2',
-                    fontWeight: FontWeight.w200,
-                  ),
-                ),
+                child: Text('Submit',
+                    style: apptextstyle(
+                        color: AppColors.white,
+                        size: 13,
+                        weight: FontWeight.w200)),
               ),
             ],
           ),
@@ -101,8 +90,8 @@ Future<void> writereviewdialogue(
       });
 }
 
-submit(String review, GlobalKey<FormState> key, String id, context, Size size,
-    Map<String, dynamic> details) {
+submit(TextEditingController review, GlobalKey<FormState> key, String id,
+    context, Size size, Map<String, dynamic> details) {
   if (key.currentState!.validate()) {
     Navigator.pop(context);
     addstardialogue(

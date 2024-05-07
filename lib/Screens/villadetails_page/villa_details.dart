@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/details_tile/villa_details_tile.dart';
+import 'package:kalliyath_villa/Screens/villadetails_page/functions.dart';
 
 class VillaDetailsPage extends StatefulWidget {
   const VillaDetailsPage({
@@ -14,9 +15,11 @@ class VillaDetailsPage extends StatefulWidget {
 }
 
 class _VillaDetailsPageState extends State<VillaDetailsPage> {
+
   String place = '';
   @override
   void initState() {
+
     if (widget.details['locationadress']['suburb'] != null) {
       place = widget.details['locationadress']['suburb'];
       return;
@@ -32,6 +35,11 @@ class _VillaDetailsPageState extends State<VillaDetailsPage> {
     return Scaffold(
         backgroundColor: Colors.transparent,
         body: VillaDetailsTile(
-            size: size, details: widget.details, place: place));
+           
+            size: size,
+            details: widget.details,
+            place: place));
   }
+
+ 
 }

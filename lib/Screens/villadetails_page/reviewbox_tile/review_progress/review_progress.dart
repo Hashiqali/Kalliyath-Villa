@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
+import 'package:kalliyath_villa/style/textstyle.dart';
 
 reviewprogress(
     {required Size size,
@@ -10,20 +12,14 @@ reviewprogress(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Text(
-          text,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontSize: 17,
-            fontFamily: 'Kalliyath2',
-            fontWeight: FontWeight.w200,
-          ),
-        ),
+        Text(text,
+            style: apptextstyle(
+                color: AppColors.white, size: 17, weight: FontWeight.w200)),
         Container(
           height: size.height / 50,
           width: size.width / 1.5,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: AppColors.white,
             borderRadius: BorderRadius.circular(5),
           ),
           child: LinearProgressIndicator(
@@ -34,13 +30,13 @@ reviewprogress(
             backgroundColor: Colors.transparent,
           ),
         ),
-        Text(
-          count,
-          style: const TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontSize: 17,
-            fontFamily: 'Kalliyath2',
-            fontWeight: FontWeight.w200,
+        SizedBox(
+          height: size.height / 35,
+          width: size.width / 9,
+          child: Center(
+            child: Text(count,
+                style: apptextstyle(
+                    color: AppColors.white, size: 17, weight: FontWeight.w200)),
           ),
         ),
       ],

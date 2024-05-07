@@ -6,8 +6,8 @@ sealed class SplashLoginEvent {}
 class InitialfetchEvent extends SplashLoginEvent {}
 
 class ObscureEvent extends SplashLoginEvent {
-  bool istrue;
-  ObscureEvent({required this.istrue});
+ final bool? istrue;
+  ObscureEvent({this.istrue});
 }
 
 class OtpTimerEvent extends SplashLoginEvent {}
@@ -21,5 +21,7 @@ class LoginToSignupEvent extends SplashLoginEvent {}
 class LoginUpdateEvent extends SplashLoginEvent {}
 
 class LodingEvent extends SplashLoginEvent {
-  
+  final  bool? istrue;
+
+  LodingEvent({required this.istrue});
 }

@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
+import 'package:kalliyath_villa/style/textstyle.dart';
 
 facilitiestile({required Map<String, dynamic> details, required Size size}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
-      const Padding(
-        padding: EdgeInsets.only(
-          top: 20,
+      Padding(
+        padding: const EdgeInsets.only(
+          top: 10,
           left: 25,
         ),
         child: Text(
           'Facilities',
-          style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontSize: 16,
-            fontFamily: 'Kalliyath2',
-            fontWeight: FontWeight.w600,
-          ),
+          style: apptextstyle(
+              color: AppColors.white, size: 16, weight: FontWeight.w600),
           overflow: TextOverflow.visible,
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(left: 25, right: 25, top: 10),
+        padding: const EdgeInsets.only(
+          left: 25,
+          right: 25,
+        ),
         child: GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -63,12 +64,10 @@ facilitiestile({required Map<String, dynamic> details, required Size size}) {
                       padding: const EdgeInsets.only(bottom: 3),
                       child: Text(
                         item['name']!,
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 255, 255, 255),
-                          fontSize: 11,
-                          fontFamily: 'Kalliyath2',
-                          fontWeight: FontWeight.w200,
-                        ),
+                        style: apptextstyle(
+                            color: AppColors.white,
+                            size: 11,
+                            weight: FontWeight.w200),
                         overflow: TextOverflow.clip,
                       ),
                     ),

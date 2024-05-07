@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:kalliyath_villa/Screens/booking_page/booking/add_date_person/add_date_person.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/bloc/details_bloc.dart';
-import 'package:kalliyath_villa/Screens/villadetails_page/carousel_widget/carousel_widget.dart';
+import 'package:kalliyath_villa/Screens/villadetails_page/functions.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
+import 'package:kalliyath_villa/style/textstyle.dart';
+import 'package:kalliyath_villa/widget/carousel_widget/carousel_widget.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/facilities_tile/facilities_tile.dart';
-import 'package:kalliyath_villa/Screens/villadetails_page/map_widget/map_widget.dart';
+import 'package:kalliyath_villa/widget/map_widget/map_widget.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/reviewbox_tile/review_box/reviewbox_tile.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/stack_buttons/stack_buttons.dart';
 
 class VillaDetailsTile extends StatefulWidget {
-  const VillaDetailsTile(
-      {super.key,
-      required this.size,
-      required this.details,
-      required this.place});
+  const VillaDetailsTile({
+    super.key,
+    required this.size,
+    required this.details,
+    required this.place,
+  });
   final Size size;
-  final Map<String, dynamic> details;
+  final dynamic details;
+
   final String place;
 
   @override
@@ -24,6 +30,15 @@ class VillaDetailsTile extends StatefulWidget {
 final DetailsBloc villadetailsbuilderblc = DetailsBloc();
 
 class _VillaDetailsTileState extends State<VillaDetailsTile> {
+  Map<DateTime, List<dynamic>> eventsMap = {};
+  @override
+  void initState() {
+    init(widget.details['id']);
+    blocreviewbox.add(Reviewbuilder(id: widget.details['id']));
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<DetailsBloc, DetailsState>(
@@ -38,13 +53,14 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
                 height: widget.size.height / 1.6,
                 width: widget.size.width,
                 decoration: const BoxDecoration(
-                  color: Colors.black,
+                  color: AppColors.black,
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(40),
                     topRight: Radius.circular(40),
                   ),
                 ),
                 child: ListView(
+                  padding: const EdgeInsets.only(top: 10, left: 2, right: 2),
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,46 +71,61 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
                           ),
                           child: Text(
                             '${widget.details['name']}, ${widget.place}, ${widget.details['locationadress']['state']}',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 20,
-                              fontFamily: 'Kalliyath2',
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: apptextstyle(
+                                color: AppColors.white,
+                                size: 20,
+                                weight: FontWeight.w600),
                             overflow: TextOverflow.visible,
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25),
-                          child: Text(
-                            widget.details['totalstar'].toString() == '0'
-                                ? '★ 0.0'
-                                : '★ ${widget.details['totalstar'].toString().substring(0, 3)}',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 16,
-                              fontFamily: 'Kalliyath2',
-                              fontWeight: FontWeight.w600,
-                            ),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
+                        BlocBuilder<DetailsBloc, DetailsState>(
+                            bloc: blocreviewbox,
+                            builder: (context, state) {
+                              if (state is ReviewbuilderState) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 25),
+                                  child: Text(
+                                    state.viiladetails['totalstar']
+                                                .toString() ==
+                                            '0'
+                                        ? '★ 0.0'
+                                        : '★ ${state.viiladetails['totalstar'].toString().substring(0, 3)}',
+                                    style: apptextstyle(
+                                        color: AppColors.white,
+                                        size: 16,
+                                        weight: FontWeight.w600),
+                                    overflow: TextOverflow.visible,
+                                  ),
+                                );
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 25),
+                                child: Text(
+                                  widget.details['totalstar'].toString() == '0'
+                                      ? '★ 0.0'
+                                      : '★ ${widget.details['totalstar'].toString().substring(0, 3)}',
+                                  style: apptextstyle(
+                                      color: AppColors.white,
+                                      size: 16,
+                                      weight: FontWeight.w600),
+                                  overflow: TextOverflow.visible,
+                                ),
+                              );
+                            }),
                         mapwidget(size: widget.size, details: widget.details),
                         facilitiestile(
                             details: widget.details, size: widget.size),
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                             top: 20,
                             left: 25,
                           ),
                           child: Text(
-                            'Introduction',
-                            style: TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 16,
-                              fontFamily: 'Kalliyath2',
-                              fontWeight: FontWeight.w600,
-                            ),
+                            'Description',
+                            style: apptextstyle(
+                                color: AppColors.white,
+                                size: 16,
+                                weight: FontWeight.w600),
                             overflow: TextOverflow.visible,
                           ),
                         ),
@@ -106,12 +137,10 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
                           ),
                           child: Text(
                             widget.details['description'],
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 10,
-                              fontFamily: 'Kalliyath2',
-                              fontWeight: FontWeight.w200,
-                            ),
+                            style: apptextstyle(
+                                color: AppColors.white,
+                                size: 10,
+                                weight: FontWeight.w200),
                             overflow: TextOverflow.visible,
                           ),
                         ),
@@ -119,12 +148,10 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
                           padding: const EdgeInsets.only(left: 25, top: 5),
                           child: Text(
                             'Bhk : ${widget.details['bhk']}',
-                            style: const TextStyle(
-                              color: Color.fromARGB(255, 255, 255, 255),
-                              fontSize: 15,
-                              fontFamily: 'Kalliyath2',
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: apptextstyle(
+                                color: AppColors.white,
+                                size: 15,
+                                weight: FontWeight.w400),
                             overflow: TextOverflow.visible,
                           ),
                         ),
@@ -132,56 +159,60 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
                             size: widget.size,
                             context: context,
                             details: widget.details),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 30),
-                          child: Center(
-                            child: Container(
-                              height: widget.size.height / 16,
-                              width: widget.size.width / 1.8,
-                              decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(49, 255, 255, 255),
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 30, right: 10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text(
-                                      'Book Now',
-                                      style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        fontSize: 16,
-                                        fontFamily: 'Kalliyath2',
-                                        fontWeight: FontWeight.w400,
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => BookingPage(
+                                      eventsMap: eventsMap,
+                                      place: widget.place,
+                                      details: widget.details,
+                                    )));
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 20, bottom: 30),
+                            child: Center(
+                              child: Container(
+                                height: widget.size.height / 16,
+                                width: widget.size.width / 1.8,
+                                decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(49, 255, 255, 255),
+                                    borderRadius: BorderRadius.circular(50)),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 30, right: 10),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        'Book Now',
+                                        style: apptextstyle(
+                                            color: AppColors.white,
+                                            size: widget.size.width / 28,
+                                            weight: FontWeight.w400),
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: const Color.fromARGB(
-                                              255, 255, 255, 255),
-                                          borderRadius:
-                                              BorderRadius.circular(50)),
-                                      height: widget.size.height / 20,
-                                      width: widget.size.width / 4.4,
-                                      child: Center(
-                                        child: Text(
-                                          '${widget.details['price']}/Day',
-                                          style: const TextStyle(
-                                            color: Color.fromARGB(255, 0, 0, 0),
-                                            fontSize: 14,
-                                            fontFamily: 'Kalliyath2',
-                                            fontWeight: FontWeight.w700,
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(50)),
+                                        height: widget.size.height / 20,
+                                        width: widget.size.width / 4.4,
+                                        child: Center(
+                                          child: Text(
+                                            '${widget.details['price']}/night',
+                                            style: apptextstyle(
+                                                color: AppColors.black,
+                                                size: 14,
+                                                weight: FontWeight.w700),
+                                            overflow: TextOverflow.ellipsis,
                                           ),
-                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                      ),
-                                    )
-                                  ],
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -198,5 +229,9 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
         );
       },
     );
+  }
+
+  void init(String id) async {
+    eventsMap = await getbookeddates(id);
   }
 }

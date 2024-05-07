@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/otp_verification/function.dart';
-import 'package:kalliyath_villa/Screens/splash_login/login_signup/otp_verification/otpTile.dart';
+import 'package:kalliyath_villa/Screens/splash_login/login_signup/otp_verification/otp_tile.dart';
 import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
+import 'package:kalliyath_villa/colors/colors.dart';
 
 // ignore: must_be_immutable
 class OtpVerificationPage extends StatefulWidget {
@@ -16,8 +17,8 @@ class OtpVerificationPage extends StatefulWidget {
   String verifictionid;
   String phoneNumber;
   int otptocken;
-  // ignore: prefer_typing_uninitialized_variables
-  final data;
+
+  dynamic data;
   bool istrue;
 
   @override
@@ -52,7 +53,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
               image: DecorationImage(
                   fit: BoxFit.cover,
                   colorFilter: ColorFilter.mode(
-                    Colors.black.withOpacity(0.20),
+                    AppColors.black.withOpacity(0.20),
                     BlendMode.saturation,
                   ),
                   image: const AssetImage(

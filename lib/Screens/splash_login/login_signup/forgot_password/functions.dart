@@ -3,7 +3,7 @@ import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/authentication/authentication.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/functions.dart';
-import 'package:kalliyath_villa/widget/snackbar.dart';
+import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
 
 forgot(context, formkey, phonenumber) async {
   if (formkey.currentState!.validate()) {
@@ -39,7 +39,7 @@ changePassword(context, formkey, password, repassword, phonenumber) async {
       await adduserdata(phonenumber.substring(3), password, data['Username'],
           data['Image'] ?? '', data['id']);
       Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (ctx) => ManiScreen()), (route) => false);
+          MaterialPageRoute(builder: (ctx) => const ManiScreen()), (route) => false);
     } else {
       snackbarAlert(context, 'Please Confirm Your Password');
     }

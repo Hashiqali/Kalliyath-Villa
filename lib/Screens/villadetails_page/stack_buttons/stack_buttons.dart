@@ -2,7 +2,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/home_screen/bloc/home_bloc.dart';
-import 'package:kalliyath_villa/Screens/home_screen/grid_tile/like_button.dart';
+import 'package:kalliyath_villa/widget/like_button_widget.dart/like_button_widget.dart';
 import 'package:kalliyath_villa/Screens/home_screen/homescreen.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/bloc/details_bloc.dart';
 

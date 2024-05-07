@@ -3,12 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kalliyath_villa/firebase/functions.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
-import 'package:kalliyath_villa/widget/snackbar.dart';
+import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/functions.dart';
-
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/otp_verification/otp_verification.dart';
 
 final CollectionReference signupdata =
@@ -49,9 +47,9 @@ googleSigning(context) async {
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    if (gooogleAuth.accessToken == null || gooogleAuth.idToken == null) {
-      return;
-    }
+    // if (gooogleAuth.accessToken == null || gooogleAuth.idToken == null) {
+    //   return;
+    // }
 
     final istrue = signupDocuments
         .any((element) => element['Email'] == userCredential.user?.email);
@@ -61,7 +59,8 @@ googleSigning(context) async {
         'Username': userCredential.user?.displayName,
         'Phone Number': userCredential.user?.phoneNumber,
         'Email': userCredential.user?.email,
-        'Image': userCredential.user?.photoURL
+        'Image': userCredential.user?.photoURL,
+        'status': false,
       };
       await signupdata.add(data);
       await getsignup();
@@ -72,6 +71,7 @@ googleSigning(context) async {
       snackbarAlert(context, 'Google Account Already Exist');
     }
   } catch (e) {
+    print(e);
     log(e.toString());
   }
 }
@@ -79,26 +79,30 @@ googleSigning(context) async {
 googlelogin(context) async {
   try {
     await GoogleSignIn().signOut();
+    await getsignup();
     GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     GoogleSignInAuthentication? gooogleAuth = await googleUser?.authentication;
     AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: gooogleAuth?.accessToken, idToken: gooogleAuth?.idToken);
     UserCredential userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
-
+    final status = signupDocuments.any((element) => element['status'] == true);
     final istrue = signupDocuments
         .any((element) => element['Email'] == userCredential.user?.email);
 
     final data = signupDocuments.firstWhere(
         (element) => element['Email'] == userCredential.user?.email);
-
-    if (istrue) {
-      snackbarSucess(context, 'Success');
-      await Future.delayed(const Duration(seconds: 1));
-      await adduserdata(data['Phone Number'] ?? '', data['Passeord'] ?? '',
-          data['Username'] ?? '', data['Image'] ?? '',data['id']);
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (ctx) => ManiScreen()));
+    if (status == false) {
+      if (istrue) {
+        snackbarSucess(context, 'Success');
+        await Future.delayed(const Duration(seconds: 1));
+        await adduserdata(data['Phone Number'] ?? '', data['Passeord'] ?? '',
+            data['Username'] ?? '', data['Image'] ?? '', data['id']);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (ctx) => const ManiScreen()));
+      }
+    } else {
+      snackbarAlert(context, 'Your account has been blocked');
     }
   } catch (e) {
     snackbarAlert(context, 'Google Account Doesn\'t Exist');

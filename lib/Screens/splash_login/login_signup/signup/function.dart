@@ -1,7 +1,5 @@
-
 import 'package:kalliyath_villa/firebase/get_functions.dart';
-
-import 'package:kalliyath_villa/widget/snackbar.dart';
+import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
 import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/authentication/authentication.dart';
 import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
@@ -18,12 +16,14 @@ signup(
       snackbarAlert(context, 'Phone Number Already Exist');
     } else {
       final data = {
+        'Email': "",
         'Username': username,
         'Phone Number': '+91$phonenumber',
         'Password': password,
+        'status':false,
       };
       snackbarAlert(context, 'Please wait');
-      bloc1.add(LodingEvent());
+      bloc1.add(LodingEvent(istrue: true));
       otpSignin(context, data, phonenumber, false);
     }
   } else {
