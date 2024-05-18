@@ -12,8 +12,10 @@ String endingdate = '';
 DateTime? selecteddate;
 
 class CalendarWidget extends StatefulWidget {
-  const CalendarWidget({super.key, required this.eventsMap});
+  const CalendarWidget(
+      {super.key, required this.eventsMap, required this.dateshow});
   final Map<DateTime, List<dynamic>> eventsMap;
+  final BookingBloc dateshow;
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
@@ -108,7 +110,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                 if (!widget.eventsMap.containsKey(date)) {
                   return null;
                 } else {
-                  return Center(
+                  return const Center(
                       child: Icon(
                     Icons.luggage_rounded,
                     size: 18,
@@ -143,7 +145,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
         start != null ? start.add(const Duration(days: 1)) : DateTime.now();
     if (widget.eventsMap.containsKey(startDateAfter.toUtc()) &&
         widget.eventsMap.containsKey(startDateBefore.toUtc())) {
-      print('success');
       selecteddate = null;
       focusedday = focusedDay;
       startingddate = DateFormat.yMMMd().format(start ?? DateTime.now());
@@ -153,8 +154,6 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       enddate = startDateAfter;
       datebuildbloc.add(CalenardateBuilder());
       calendarbloc.add(CalenarBuilder());
-      print(startdate);
-      print(enddate);
     } else {
       if (!_hasEvents(
         start ?? DateTime.now(),
@@ -169,6 +168,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
 
         datebuildbloc.add(CalenardateBuilder());
         calendarbloc.add(CalenarBuilder());
+        widget.dateshow.add(BookingDateShow());
       }
     }
   }

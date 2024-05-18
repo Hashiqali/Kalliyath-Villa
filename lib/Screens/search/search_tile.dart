@@ -8,6 +8,8 @@ import 'package:kalliyath_villa/Screens/search/filter/filter_widget/filter_widge
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'filter/functions.dart';
 
+FocusNode focusNodeSearch = FocusNode();
+
 searchTile(
     {required Size size,
     required SearchBloc searchvisiblebloc,
@@ -44,6 +46,7 @@ searchTile(
                 SizedBox(
                   width: istrue == false ? size.width - 20 : size.width - 70,
                   child: TextFormField(
+                      focusNode: focusNodeSearch,
                       controller: controller,
                       validator: (value) {
                         if (value!.isNotEmpty) {
@@ -58,7 +61,9 @@ searchTile(
                       },
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.search_outlined),
+                        prefixIcon: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.search_outlined)),
                         suffixIcon: IconButton(
                           icon: const Icon(EvaIcons.options2),
                           onPressed: () {
@@ -68,8 +73,7 @@ searchTile(
                         filled: true,
                         fillColor: AppColors.white,
                         hintText: 'Search',
-                        hintStyle:
-                         const TextStyle(
+                        hintStyle: const TextStyle(
                           fontFamily: 'Kalliyath1',
                           color: Color.fromARGB(210, 158, 158, 158),
                         ),

@@ -35,7 +35,9 @@ carouselWidget({required Size size, required Map<String, dynamic> details}) {
                     indicatorMargin: 45,
                     viewportFraction: 1.0,
                     showIndicator: true,
-                    slideIndicator: const CircularSlideIndicator(),
+                    slideIndicator: const CircularSlideIndicator(
+                 
+                        currentIndicatorColor: AppColors.white),
                   ),
                   items: villa['images'].map<Widget>((i) {
                     return Builder(
@@ -76,5 +78,3 @@ carouselWidget({required Size size, required Map<String, dynamic> details}) {
     ],
   );
 }
-
-

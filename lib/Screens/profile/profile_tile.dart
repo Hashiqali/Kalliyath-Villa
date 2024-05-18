@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/about/about.dart';
+import 'package:kalliyath_villa/Screens/chat_screen/chat_screen.dart';
 import 'package:kalliyath_villa/Screens/privacy_policy/privacy_policy.dart';
 import 'package:kalliyath_villa/Screens/profile/profile_option_tile/profile_option_tile.dart';
 import 'package:kalliyath_villa/Screens/profile/user_bookings/user_bookings.dart';
@@ -36,10 +37,13 @@ profileTile({required Size size, required BuildContext context}) {
                 text: 'Bookings',
                 istrue: false),
             ProfieOption(
-                function: () {},
+                function: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (ctx) => const ChatScreenPage()));
+                },
                 image: 'assets/images/question.png',
                 size: size,
-                text: 'Customer Service',
+                text: 'Customer Support',
                 istrue: false),
             ProfieOption(
                 function: () {

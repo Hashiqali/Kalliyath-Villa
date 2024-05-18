@@ -38,7 +38,9 @@ alertbox({required BuildContext context, required Size size}) {
                       itemCount: data.length,
                       itemBuilder: (ctx, index) {
                         final category = data[index];
-                        return CheckBoxWidget(activecolor: AppColors.black,
+                        return CheckBoxWidget(
+                          activecolor: AppColors.black,
+                          size: size,
                           appcolor: AppColors.black,
                           istrue: false,
                           ontap: (val) {

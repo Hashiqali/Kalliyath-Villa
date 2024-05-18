@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:kalliyath_villa/Screens/booking_page/booking/add_details_person/functions.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
-import 'package:kalliyath_villa/widget/countrycodepicker_widget/countrycodepicker_widget.dart';
+
 import 'package:kalliyath_villa/widget/select_country_state_city_widget/select_widget.dart';
 
+String countryCode = '';
 secondBookingTile(
     {required Size size,
     required BuildContext context,
@@ -80,18 +82,6 @@ secondBookingTile(
                         Row(
                           children: [
                             Expanded(
-                              flex: 2,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Country Code',
-                                      style: apptextstyle(
-                                          color: AppColors.white, size: 14)),
-                                  countryCodePickerWiget()
-                                ],
-                              ),
-                            ),
-                            Expanded(
                               flex: 3,
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,27 +92,41 @@ secondBookingTile(
                                         style: apptextstyle(
                                             color: AppColors.white, size: 14)),
                                   ),
-                                  TextFormField(
-                                    validator: (value) {
-                                      if (value!.isEmpty) {
-                                        return 'Please enter phone number';
-                                      }
-                                      return null;
-                                    },
-                                    controller: phonecontroller,
-                                    cursorColor: AppColors.white,
-                                    keyboardType: TextInputType.number,
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    style:
-                                        const TextStyle(color: AppColors.white),
+                                  IntlPhoneField(
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
                                           RegExp(r'^[0-9]*$')),
                                     ],
+                                    controller: phonecontroller,
+                                    validator: (phone) {
+                                      if (phone == null ||
+                                          !phone.isValidNumber()) {
+                                        return 'Please enter a valid phone number';
+                                      }
+                                      return null;
+                                    },
+                                    initialCountryCode: 'IN',
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    keyboardType: TextInputType.phone,
+                                    dropdownIcon: const Icon(
+                                      Icons.arrow_drop_down,
+                                      color: AppColors.white,
+                                    ),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      color: AppColors.white,
+                                    ),
                                     decoration: InputDecoration(
-                                      suffixIcon: const Icon(
-                                          Icons.phone_android_outlined),
+                                      prefixText: '+$countryCode',
+                                      prefixStyle: const TextStyle(
+                                          color: AppColors.white,
+                                          fontSize: 16.4),
+                                      hintText: 'Phone Number',
+                                      hintStyle: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 86, 86, 86),
+                                          fontWeight: FontWeight.normal),
                                       filled: true,
                                       fillColor:
                                           const Color.fromARGB(186, 46, 45, 45),
@@ -135,8 +139,13 @@ secondBookingTile(
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(3),
                                       ),
+                                      suffixIcon: const Icon(
+                                          Icons.phone_android_outlined),
                                       contentPadding: const EdgeInsets.all(8),
                                     ),
+                                    onCountryChanged: (phone) {
+                                      countryCode = phone.displayCC;
+                                    },
                                   ),
                                 ],
                               ),
@@ -206,6 +215,7 @@ secondBookingTile(
                             },
                             controller: pincodecontroller,
                             inputFormatters: [
+                              LengthLimitingTextInputFormatter(10),
                               FilteringTextInputFormatter.allow(
                                   RegExp(r'^[0-9]*$')),
                             ],
@@ -241,6 +251,7 @@ secondBookingTile(
           ),
           GestureDetector(
             onTap: () {
+              focusNode.unfocus();
               confirmbooking(
                   details: details,
                   place: place,

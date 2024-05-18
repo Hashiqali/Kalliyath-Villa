@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/home_screen/bloc/home_bloc.dart';
+import 'package:kalliyath_villa/Screens/search/search_tile.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 import 'package:kalliyath_villa/widget/like_button_widget.dart/like_button_widget.dart';
@@ -15,6 +16,7 @@ Widget maintilewidget(
 
   return InkWell(
     onTap: () {
+      focusNodeSearch.unfocus();
       Navigator.of(context).push(MaterialPageRoute(
           builder: (ctx) => VillaDetailsPage(details: details)));
     },
@@ -78,7 +80,7 @@ Widget maintilewidget(
               ),
               Container(
                 width: double.maxFinite,
-                height: size.height / 12,
+                height: size.height / 11,
                 decoration: const BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.only(
@@ -97,7 +99,7 @@ Widget maintilewidget(
                           details['name'],
                           style: apptextstyle(
                               color: AppColors.black,
-                              size: 18,
+                              size: size.width / 22,
                               weight: FontWeight.w600),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -109,13 +111,13 @@ Widget maintilewidget(
                           children: [
                             Row(
                               children: [
-                                const Image(
-                                  height: 17,
-                                  width: 17,
-                                  image:
-                                      AssetImage('assets/images/star (1).png'),
+                                Image(
+                                  height: size.width / 25,
+                                  width: size.width / 25,
+                                  image: const AssetImage(
+                                      'assets/images/star (1).png'),
                                 ),
-                                const SizedBox(width: 5),
+                                SizedBox(width: size.width / 70),
                                 Text(
                                     details['totalstar'].toString() == '0' ||
                                             details['totalstar'].toString() ==
@@ -125,11 +127,13 @@ Widget maintilewidget(
                                             .toString()
                                             .substring(0, 3),
                                     style: apptextstyle(
-                                        color: AppColors.black, size: 19)),
-                                const SizedBox(width: 5),
+                                        color: AppColors.black,
+                                        size: size.width / 25)),
+                                SizedBox(width: size.width / 60),
                                 Text(' ${details['reviews'].length} Reviews',
                                     style: apptextstyle(
-                                        color: AppColors.black, size: 16)),
+                                        color: AppColors.black,
+                                        size: size.width / 25)),
                               ],
                             ),
                             Row(
@@ -137,11 +141,12 @@ Widget maintilewidget(
                                 Text('₹${details['price']}',
                                     style: apptextstyle(
                                         color: AppColors.black,
-                                        size: 20,
+                                        size: size.width / 20,
                                         weight: FontWeight.w600)),
                                 Text('/night',
                                     style: apptextstyle(
-                                        color: AppColors.black, size: 15)),
+                                        color: AppColors.black,
+                                        size: size.width / 32)),
                               ],
                             )
                           ],

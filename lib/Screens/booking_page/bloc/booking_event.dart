@@ -10,3 +10,4 @@ class ContryCodePickerEvent extends BookingEvent{}
 class AdresssPickerEvent extends BookingEvent{}
 class BookNowLoaderEvent extends BookingEvent{}
 class BookNowLoaderCloseEvent extends BookingEvent{}
+class BookingDateShow extends BookingEvent{}

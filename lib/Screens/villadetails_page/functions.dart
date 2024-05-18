@@ -12,7 +12,10 @@ Future<Map<DateTime, List<dynamic>>> getbookeddates(String id) async {
   for (var doc in querySnapshot.docs) {
     if (doc.exists) {
       Map<String, dynamic>? data = doc.data() as Map<String, dynamic>?;
-      if (data != null && data['villa']['villaid'] == id) {
+      if (data != null &&
+          data['villa']['villaid'] == id &&
+          data['cancelled'] == false &&
+          DateTime.now().isBefore(DateTime.parse(data['villa']['checkout']))) {
         data['id'] = doc.id;
         bookings.add(data);
       }

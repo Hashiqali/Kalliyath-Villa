@@ -20,9 +20,8 @@ proceedfunction(
   if (is6thReasonSelected) {
     if (key.currentState!.validate()) {
       button.add(ProceedButton());
-      await booking
-          .doc(id)
-          .update({'reason': text.text.trim(), 'cancelled': true});
+      await booking.doc(id).update(
+          {'reason': text.text.trim(), 'cancelled': true, 'status': true});
       await Future.delayed(const Duration(seconds: 1));
       Navigator.pop(context);
       text.text = '';
@@ -30,7 +29,9 @@ proceedfunction(
   } else if (isReasonSelected) {
     button.add(ProceedButton());
 
-    await booking.doc(id).update({'reason': reason, 'cancelled': true});
+    await booking
+        .doc(id)
+        .update({'reason': reason, 'cancelled': true, 'status': true});
 
     await Future.delayed(const Duration(seconds: 1));
     Navigator.pop(context);

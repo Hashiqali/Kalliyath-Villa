@@ -6,7 +6,7 @@ import 'package:kalliyath_villa/style/textstyle.dart';
 import 'package:kalliyath_villa/widget/calendar_widget/calendar_widget.dart';
 
 final BookingBloc datebuildbloc = BookingBloc();
-datewidget(
+Widget datewidget(
     {required Size size,
     required DateTime startdate,
     required DateTime enddate}) {

@@ -16,7 +16,7 @@ secondBox(
     required int days}) {
   BookingBloc bookingbuttonbloc = BookingBloc();
   return Padding(
-    padding: const EdgeInsets.all(15),
+    padding: EdgeInsets.all(size.width / 30),
     child: Container(
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.white),
@@ -34,9 +34,7 @@ secondBox(
           GestureDetector(
             onTap: () {
               bookingbuttonbloc.add(BookNowLoaderEvent());
-              
-            
-             
+
               booknow(
                   bookingbuttonbloc: bookingbuttonbloc,
                   context: context,

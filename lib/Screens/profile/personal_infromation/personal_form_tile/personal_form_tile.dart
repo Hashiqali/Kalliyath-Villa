@@ -13,7 +13,7 @@ personalformTile(
     required BuildContext context,
     required TextEditingController namecontroller,
     required TextEditingController addresscontroller,
-    required String selectedGender,
+    required String? selectedGender,
     required List genders}) {
   return Column(
     children: [
@@ -39,7 +39,7 @@ personalformTile(
                           errorWidget: (context, url, error) =>
                               const CircleAvatar(
                             backgroundColor: Color.fromARGB(255, 39, 39, 39),
-                            backgroundImage:
+                             backgroundImage:
                                 AssetImage('assets/images/user (1).png'),
                             radius: 47,
                           ),
@@ -161,7 +161,7 @@ personalformTile(
               child: DropdownButtonFormField<String>(
                 dropdownColor: AppColors.black,
                 value: selectedGender,
-                onChanged: (newValue) {
+                onChanged: (String? newValue) {
                   selectedGender = newValue!;
                   buttoncolortracker(
                       name: namecontroller.text, gender: selectedGender);

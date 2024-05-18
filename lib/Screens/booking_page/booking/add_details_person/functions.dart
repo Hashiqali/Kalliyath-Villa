@@ -17,8 +17,8 @@ confirmbooking(
     required String cityvalue,
     required GlobalKey<FormState> key}) {
   if (key.currentState!.validate()) {
-    if (countryCode == '') {
-      snackbarAlert(context, 'Please select country code');
+    if (phonecontroller.text == '') {
+      snackbarAlert(context, 'Please add phone Number');
     } else if (countryvalue == '') {
       snackbarAlert(context, 'Please select country');
     } else if (statevalue == '') {
@@ -34,7 +34,7 @@ confirmbooking(
         'infants': bookingdetails['infants'],
         'extraperson': bookingdetails['extraperson'],
         'name': namecontroller.text.trim(),
-        'phonenumber': countryCode + phonecontroller.text.trim(),
+        'phonenumber': '+${countryCode + phonecontroller.text.trim()}',
         'address': addresscontroller.text.trim(),
         'country': countryvalue,
         'state': statevalue,

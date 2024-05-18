@@ -4,8 +4,8 @@ import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 
 class BookingConfirmedPage extends StatelessWidget {
-  const BookingConfirmedPage({super.key});
-  
+  const BookingConfirmedPage({super.key, required this.villname});
+  final String villname;
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -32,7 +32,11 @@ class BookingConfirmedPage extends StatelessWidget {
                 child: Text('Booking Confirmed',
                     style: apptextstyle(color: AppColors.white, size: 20)),
               ),
-           
+              Padding(
+                padding: const EdgeInsets.all(5),
+                child: Text(villname,
+                    style: apptextstyle(color: AppColors.white, size: 16)),
+              ),
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushAndRemoveUntil(

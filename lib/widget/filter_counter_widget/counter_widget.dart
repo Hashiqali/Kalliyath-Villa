@@ -43,7 +43,10 @@ counterWidget({required Size size}) {
             bloc: counterbloc,
             builder: (context, state) {
               return Text('BHK: $bhk',
-                  style: apptextstyle(color: AppColors.black, size: 15));
+                  style: apptextstyle(
+                    color: AppColors.black,
+                    size: size.width / 30,
+                  ));
             },
           ),
           IconButton(

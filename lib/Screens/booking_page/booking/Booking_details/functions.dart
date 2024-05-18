@@ -46,6 +46,8 @@ booknow(
   void handlePaymentSuccess(PaymentSuccessResponse response) async {
     final CollectionReference booking =
         FirebaseFirestore.instance.collection('Bookings');
+    final CollectionReference villa =
+        FirebaseFirestore.instance.collection('VillaDetails');
 
     final villadata = {
       'name': details['name'],
@@ -71,20 +73,31 @@ booknow(
       'taxes': pricedetails['taxes'],
       'total': pricedetails['totalamount']
     };
+    await villa.doc(details['id']).update({
+      'totalbooking':
+          details['totalbooking'] == null ? 1 : (details['totalbooking'] + 1),
+      'totalrevenue': details['totalrevenue'] == null
+          ? pricedetails['totalamount']
+          : details['totalrevenue'] + pricedetails['totalamount'],
+    });
     await booking.add({
+      'status': false,
       'villa': villadata,
       'address': address,
       'price': price,
       'user': appuserid,
       'cancelled': false,
-      'refund': false
+      'refund': false,
+      'Bookingdate': DateTime.now()
     });
 
     await Future.delayed(const Duration(seconds: 2));
     bookingbuttonbloc.add(BookNowLoaderCloseEvent());
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (ctx) => const BookingConfirmedPage()));
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => BookingConfirmedPage(
+              villname: details['name'],
+            )));
     adult = 1;
     childrens = 0;
     allowpersons = 0;
@@ -101,6 +114,8 @@ booknow(
     bookingbuttonbloc.add(BookNowLoaderCloseEvent());
     final CollectionReference booking =
         FirebaseFirestore.instance.collection('Bookings');
+    final CollectionReference villa =
+        FirebaseFirestore.instance.collection('VillaDetails');
 
     final villadata = {
       'name': details['name'],
@@ -126,20 +141,31 @@ booknow(
       'taxes': pricedetails['taxes'],
       'total': pricedetails['totalamount']
     };
+    await villa.doc(details['id']).update({
+      'totalbooking':
+          details['totalbooking'] == null ? 1 : (details['totalbooking'] + 1),
+      'totalrevenue': details['totalrevenue'] == null
+          ? pricedetails['totalamount']
+          : details['totalrevenue'] + pricedetails['totalamount'],
+    });
     await booking.add({
+      'status': false,
       'villa': villadata,
       'address': address,
       'price': price,
       'user': appuserid,
       'cancelled': false,
-      'refund': false
+      'refund': false,
+      'Bookingdate': DateTime.now()
     });
 
     await Future.delayed(const Duration(seconds: 2));
     bookingbuttonbloc.add(BookNowLoaderCloseEvent());
-    // ignore: use_build_context_synchronously
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (ctx) => const BookingConfirmedPage()));
+
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (ctx) => BookingConfirmedPage(
+              villname: details['name'],
+            )));
     adult = 1;
     childrens = 0;
     allowpersons = 0;

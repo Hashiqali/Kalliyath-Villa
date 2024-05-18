@@ -5,3 +5,4 @@ sealed class MainEvent {}
 
 
 class NavigationbarBuilder extends MainEvent{}
+class NavigationOnOff extends MainEvent{}

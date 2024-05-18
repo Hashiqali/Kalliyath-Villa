@@ -18,7 +18,7 @@ class _PersonalInfromationState extends State<PersonalInfromation> {
   TextEditingController addresscontroller = TextEditingController();
   String? _selectedGender;
   SplashLoginBloc loadingbutton = SplashLoginBloc();
-  List<String> genders = ['Male', 'Female', 'Other'];
+  List<String> genders = ['Male', 'Female', 'Other',];
   @override
   void initState() {
     namecontroller.text = personalinfromation['Username'];
@@ -26,7 +26,7 @@ class _PersonalInfromationState extends State<PersonalInfromation> {
     if (personalinfromation['gender'] == 'Male' ||
         personalinfromation['gender'] == 'Female' ||
         personalinfromation['gender'] == 'Other') {
-      _selectedGender = personalinfromation['gender'];
+      _selectedGender = personalinfromation['gender'] ?? 'null';
     }
     super.initState();
   }
@@ -55,7 +55,7 @@ class _PersonalInfromationState extends State<PersonalInfromation> {
             size: size,
             namecontroller: namecontroller,
             addresscontroller: addresscontroller,
-            selectedGender: _selectedGender!,
+            selectedGender: _selectedGender,
             genders: genders,
             loadingbutton: loadingbutton));
   }

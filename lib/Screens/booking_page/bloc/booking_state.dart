@@ -11,3 +11,4 @@ class ContryCodePickerState extends BookingState{}
 class AdresssPickerState extends BookingState{}
 class BookNowLoaderOnstate extends BookingState {}
 class BookNowLoaderOffstate extends BookingState {}
+class BookingDateShowState extends BookingState {}

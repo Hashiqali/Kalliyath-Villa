@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:kalliyath_villa/firebase/chat_api.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
 import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
@@ -98,6 +99,9 @@ googlelogin(context) async {
         await Future.delayed(const Duration(seconds: 1));
         await adduserdata(data['Phone Number'] ?? '', data['Passeord'] ?? '',
             data['Username'] ?? '', data['Image'] ?? '', data['id']);
+        ChatController.updateUserData({
+          'lastActive': DateTime.now(),
+        });
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (ctx) => const ManiScreen()));
       }

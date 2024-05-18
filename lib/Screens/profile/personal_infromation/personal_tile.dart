@@ -13,7 +13,7 @@ personalTile(
     {required Size size,
     required TextEditingController namecontroller,
     required TextEditingController addresscontroller,
-    required String selectedGender,
+    required String? selectedGender,
     required List genders,
     required SplashLoginBloc loadingbutton}) {
   return Container(

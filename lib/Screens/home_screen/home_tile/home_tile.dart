@@ -5,14 +5,47 @@ import 'package:kalliyath_villa/Screens/home_screen/functions.dart';
 import 'package:kalliyath_villa/Screens/home_screen/grid_tile/grid_tile.dart';
 import 'package:kalliyath_villa/Screens/home_screen/homescreen.dart';
 import 'package:kalliyath_villa/Screens/home_screen/main_tile/main_tile.dart';
+import 'package:kalliyath_villa/Screens/main_screen/bloc/main_bloc.dart';
+import 'package:kalliyath_villa/Screens/main_screen/mainscreen_tile.dart';
+import 'package:kalliyath_villa/Screens/search/search_tile.dart';
 import 'package:kalliyath_villa/Screens/villadetails_page/villa_details.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 
-class HomeTile extends StatelessWidget {
+class HomeTile extends StatefulWidget {
   const HomeTile({super.key, required this.size});
 
   final Size size;
+
+  @override
+  State<HomeTile> createState() => _HomeTileState();
+}
+
+class _HomeTileState extends State<HomeTile> {
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (_scrollController.offset >= widget.size.height / 50) {
+      navigationbool = false;
+      navigationcontroll.add(NavigationOnOff());
+    } else {
+      navigationbool = true;
+      navigationcontroll.add(NavigationOnOff());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +59,7 @@ class HomeTile extends StatelessWidget {
               return refresh(homebloc);
             },
             child: SingleChildScrollView(
+              controller: _scrollController,
               child: Padding(
                 padding: const EdgeInsets.only(top: 5),
                 child: state.vllaDetails.isEmpty
@@ -39,20 +73,18 @@ class HomeTile extends StatelessWidget {
                         child: Container(
                           height: state.vllaDetails.length > 4
                               ? null
-                              : size.height - 80,
+                              : widget.size.height - 50,
                           color: AppColors.darkblue,
                           padding: const EdgeInsets.symmetric(horizontal: 6.0),
-                          child:
-                          
-                           Column(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: size.height / 12),
+                              SizedBox(height: widget.size.height / 12),
                               maintilewidget(
                                   context: context,
-                                  size: size,
+                                  size: widget.size,
                                   details: state.vllaDetails.last),
-                              SizedBox(height: size.height / 50),
+                              SizedBox(height: widget.size.height / 50),
                               GridView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
@@ -67,7 +99,8 @@ class HomeTile extends StatelessWidget {
                                   final details = state.vllaDetails[index];
 
                                   return GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
+                                      focusNodeSearch.unfocus();
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (ctx) =>
@@ -75,7 +108,7 @@ class HomeTile extends StatelessWidget {
                                                       details: details)));
                                     },
                                     child: GridTileWidget(
-                                      size: size,
+                                      size: widget.size,
                                       details: details,
                                     ),
                                   );
@@ -112,14 +145,15 @@ class HomeTile extends StatelessWidget {
                       final details = state.filtereditems[index];
 
                       return GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          focusNodeSearch.unfocus();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (ctx) => VillaDetailsPage(
                                     details: details,
                                   )));
                         },
                         child: GridTileWidget(
-                          size: size,
+                          size: widget.size,
                           details: details,
                         ),
                       );
@@ -141,19 +175,20 @@ class HomeTile extends StatelessWidget {
                       Padding(
                           padding: const EdgeInsets.only(bottom: 15, top: 5),
                           child: GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               homebloc.add(Homerebuild());
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                   color: AppColors.red,
                                   borderRadius: BorderRadius.circular(10)),
-                              height: size.height / 25,
-                              width: size.width / 4,
-                              child:  Center(
+                              height: widget.size.height / 25,
+                              width: widget.size.width / 4,
+                              child: Center(
                                 child: Text(
                                   'Clear filter',
-                                  style: apptextstyle(color: AppColors.white, size: 15),
+                                  style: apptextstyle(
+                                      color: AppColors.white, size: 15),
                                 ),
                               ),
                             ),
@@ -172,14 +207,14 @@ class HomeTile extends StatelessWidget {
                           final details = state.filtereditems[index];
 
                           return GestureDetector(
-                            onTap: () {
+                            onTap: () async {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (ctx) => VillaDetailsPage(
                                         details: details,
                                       )));
                             },
                             child: GridTileWidget(
-                              size: size,
+                              size: widget.size,
                               details: details,
                             ),
                           );

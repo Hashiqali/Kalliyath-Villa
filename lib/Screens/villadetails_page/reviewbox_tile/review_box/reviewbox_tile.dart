@@ -72,8 +72,9 @@ reviewboxtile(
                                     ? '5 out of 5'
                                     : '${state.viiladetails['totalstar'].toString() == 'NaN' || state.viiladetails['totalstar'].toString() == '0' ? 0.0 : state.viiladetails['totalstar'].toString().substring(0, 3)} out of 5',
                                 style: apptextstyle(
-                                    color: AppColors.white,
-                                    size: 14,
+                                    color:
+                                        const Color.fromRGBO(255, 255, 255, 1),
+                                    size: size.width / 30,
                                     family: 'Kalliyath',
                                     weight: FontWeight.normal)),
                           ),
@@ -102,7 +103,7 @@ reviewboxtile(
                               children: [
                                 SizedBox(
                                   height: size.height / 23,
-                                  width: size.width / 3.5,
+                                  width: size.width / 3,
                                 ),
                                 Positioned(
                                   left: 75,

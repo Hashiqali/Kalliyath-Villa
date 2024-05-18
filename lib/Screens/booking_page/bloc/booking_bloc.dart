@@ -15,6 +15,7 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
     on<AdresssPickerEvent>(adresssPickerEvent);
     on<BookNowLoaderEvent>(bookNowLoaderEvent);
     on<BookNowLoaderCloseEvent>(bookNowLoaderCloseEvent);
+    on<BookingDateShow>(bookingDateShow);
   }
 
   FutureOr<void> calenarBuilder(
@@ -50,5 +51,10 @@ class BookingBloc extends Bloc<BookingEvent, BookingState> {
   FutureOr<void> bookNowLoaderCloseEvent(
       BookNowLoaderCloseEvent event, Emitter<BookingState> emit) {
     emit(BookNowLoaderOffstate());
+  }
+
+  FutureOr<void> bookingDateShow(
+      BookingDateShow event, Emitter<BookingState> emit) {
+    emit(BookingDateShowState());
   }
 }

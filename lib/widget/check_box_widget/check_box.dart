@@ -13,13 +13,15 @@ class CheckBoxWidget extends StatefulWidget {
       required this.istrue,
       required this.ontap,
       required this.text,
-      required this.activecolor});
+      required this.activecolor,
+      required this.size});
   final Function ontap;
   final bool istrue;
   final String text;
   final Color appcolor;
   final Color activecolor;
   bool? checkcolor = false;
+  final Size size;
 
   @override
   State<CheckBoxWidget> createState() => _CheckBoxWidgetState();
@@ -28,6 +30,7 @@ class CheckBoxWidget extends StatefulWidget {
 class _CheckBoxWidgetState extends State<CheckBoxWidget> {
   final SearchBloc checkboxbloc = SearchBloc();
   bool istrue = false;
+
   @override
   void initState() {
     istrue = widget.istrue;
@@ -47,7 +50,9 @@ class _CheckBoxWidgetState extends State<CheckBoxWidget> {
         return CheckboxListTile(
           title: Text(widget.text,
               style: apptextstyle(
-                  color: widget.appcolor, size: 13, family: 'Kalliyath')),
+                  color: widget.appcolor,
+                  size: widget.size.width / 35,
+                  family: 'Kalliyath')),
           activeColor: widget.activecolor,
           checkColor:
               widget.checkcolor != true ? AppColors.white : AppColors.black,

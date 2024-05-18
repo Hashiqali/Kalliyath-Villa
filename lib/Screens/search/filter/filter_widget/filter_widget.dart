@@ -37,7 +37,7 @@ filterwidget({required BuildContext context, required Size size}) {
                           Text('Price/night',
                               style: apptextstyle(
                                   color: AppColors.black,
-                                  size: 12,
+                                  size: size.width / 35,
                                   weight: FontWeight.w200)),
                           SizedBox(
                             height: size.height / 70,
@@ -59,7 +59,7 @@ filterwidget({required BuildContext context, required Size size}) {
                           Text('₹$minprice - ₹$maxprice',
                               style: apptextstyle(
                                   color: AppColors.black,
-                                  size: 12,
+                                  size: size.width / 40,
                                   weight: FontWeight.w200)),
                         ],
                       ),
@@ -72,6 +72,7 @@ filterwidget({required BuildContext context, required Size size}) {
                 children: [
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -81,6 +82,7 @@ filterwidget({required BuildContext context, required Size size}) {
                           text: 'Ac')),
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -94,6 +96,7 @@ filterwidget({required BuildContext context, required Size size}) {
                 children: [
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -103,6 +106,7 @@ filterwidget({required BuildContext context, required Size size}) {
                           text: 'Swimming pool')),
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -116,6 +120,7 @@ filterwidget({required BuildContext context, required Size size}) {
                 children: [
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -125,6 +130,7 @@ filterwidget({required BuildContext context, required Size size}) {
                           text: 'Spa Center')),
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,
@@ -138,6 +144,7 @@ filterwidget({required BuildContext context, required Size size}) {
                 children: [
                   Expanded(
                       child: CheckBoxWidget(
+                          size: size,
                           activecolor: AppColors.black,
                           appcolor: AppColors.black,
                           istrue: false,

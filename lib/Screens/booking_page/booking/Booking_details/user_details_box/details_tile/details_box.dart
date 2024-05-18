@@ -20,12 +20,16 @@ detailsBox({required Size size, required Map<String, Object?> bookingdetails}) {
             Text(
               'Booking Details',
               style: apptextstyle(
-                  color: AppColors.white, size: 13, weight: FontWeight.w600),
+                  color: AppColors.white,
+                  size: size.width / 28,
+                  weight: FontWeight.w600),
             ),
-            detailsTile(text: 'Name : ${bookingdetails['name']}'),
+            detailsTile(text: 'Name : ${bookingdetails['name']}', size: size),
             detailsTile(
-                text: 'Phone Number : ${bookingdetails['phonenumber']}'),
+                text: 'Phone Number : ${bookingdetails['phonenumber']}',
+                size: size),
             detailsTile(
+                size: size,
                 text:
                     'Address : ${bookingdetails['address']},${bookingdetails['pincode']}, ${bookingdetails['city']},${bookingdetails['state']},${bookingdetails['country'].toString().substring(4, bookingdetails['country'].toString().length).trim()}')
           ],

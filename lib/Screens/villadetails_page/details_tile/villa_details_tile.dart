@@ -18,9 +18,9 @@ class VillaDetailsTile extends StatefulWidget {
     required this.details,
     required this.place,
   });
+
   final Size size;
   final dynamic details;
-
   final String place;
 
   @override
@@ -31,12 +31,12 @@ final DetailsBloc villadetailsbuilderblc = DetailsBloc();
 
 class _VillaDetailsTileState extends State<VillaDetailsTile> {
   Map<DateTime, List<dynamic>> eventsMap = {};
+
   @override
   void initState() {
+    super.initState();
     init(widget.details['id']);
     blocreviewbox.add(Reviewbuilder(id: widget.details['id']));
-
-    super.initState();
   }
 
   @override
@@ -44,188 +44,180 @@ class _VillaDetailsTileState extends State<VillaDetailsTile> {
     return BlocBuilder<DetailsBloc, DetailsState>(
       bloc: villadetailsbuilderblc,
       builder: (context, state) {
-        return Stack(
-          children: [
-            carouselWidget(size: widget.size, details: widget.details),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: widget.size.height / 1.6,
-                width: widget.size.width,
-                decoration: const BoxDecoration(
-                  color: AppColors.black,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: ListView(
-                  padding: const EdgeInsets.only(top: 10, left: 2, right: 2),
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+        return SingleChildScrollView(
+          child: SizedBox(
+            height: widget.size.height,
+            width: widget.size.width,
+            child: Stack(
+              children: [
+                carouselWidget(size: widget.size, details: widget.details),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: widget.size.height / 1.6,
+                    width: widget.size.width,
+                    decoration: const BoxDecoration(
+                      color: AppColors.black,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(40),
+                        topRight: Radius.circular(40),
+                      ),
+                    ),
+                    child: ListView(
+                      padding:
+                          const EdgeInsets.only(top: 10, left: 2, right: 2),
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            left: 25,
-                          ),
-                          child: Text(
-                            '${widget.details['name']}, ${widget.place}, ${widget.details['locationadress']['state']}',
-                            style: apptextstyle(
-                                color: AppColors.white,
-                                size: 20,
-                                weight: FontWeight.w600),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                        BlocBuilder<DetailsBloc, DetailsState>(
-                            bloc: blocreviewbox,
-                            builder: (context, state) {
-                              if (state is ReviewbuilderState) {
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 25, top: 15, right: 25),
+                              child: Text(
+                                '${widget.details['name']}, ${widget.place}, ${widget.details['locationadress']['state']}',
+                                style: apptextstyle(
+                                  color: AppColors.white,
+                                  size: widget.size.width / 20,
+                                  weight: FontWeight.w600,
+                                ),
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
+                            BlocBuilder<DetailsBloc, DetailsState>(
+                              bloc: blocreviewbox,
+                              builder: (context, state) {
+                                final ratingText = state is ReviewbuilderState
+                                    ? (state.viiladetails['totalstar']
+                                                .toString() ==
+                                            '0'
+                                        ? '★ 0.0 , Bhk : ${widget.details['bhk']}'
+                                        : '★ ${state.viiladetails['totalstar'].toString().substring(0, 3)} , Bhk : ${widget.details['bhk']}')
+                                    : (widget.details['totalstar'].toString() ==
+                                            '0'
+                                        ? '★ 0.0 , Bhk : ${widget.details['bhk']}'
+                                        : '★ ${widget.details['totalstar'].toString().substring(0, 3)} , Bhk : ${widget.details['bhk']}');
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 25),
                                   child: Text(
-                                    state.viiladetails['totalstar']
-                                                .toString() ==
-                                            '0'
-                                        ? '★ 0.0'
-                                        : '★ ${state.viiladetails['totalstar'].toString().substring(0, 3)}',
+                                    ratingText,
                                     style: apptextstyle(
-                                        color: AppColors.white,
-                                        size: 16,
-                                        weight: FontWeight.w600),
+                                      color: AppColors.white,
+                                      size: 16,
+                                      weight: FontWeight.w600,
+                                    ),
                                     overflow: TextOverflow.visible,
                                   ),
                                 );
-                              }
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 25),
-                                child: Text(
-                                  widget.details['totalstar'].toString() == '0'
-                                      ? '★ 0.0'
-                                      : '★ ${widget.details['totalstar'].toString().substring(0, 3)}',
-                                  style: apptextstyle(
-                                      color: AppColors.white,
-                                      size: 16,
-                                      weight: FontWeight.w600),
-                                  overflow: TextOverflow.visible,
+                              },
+                            ),
+                            mapwidget(
+                                size: widget.size, details: widget.details),
+                            facilitiestile(
+                                details: widget.details, size: widget.size),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 10, left: 25),
+                              child: Text(
+                                'Description',
+                                style: apptextstyle(
+                                  color: AppColors.white,
+                                  size: 16,
+                                  weight: FontWeight.w600,
                                 ),
-                              );
-                            }),
-                        mapwidget(size: widget.size, details: widget.details),
-                        facilitiestile(
-                            details: widget.details, size: widget.size),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 20,
-                            left: 25,
-                          ),
-                          child: Text(
-                            'Description',
-                            style: apptextstyle(
-                                color: AppColors.white,
-                                size: 16,
-                                weight: FontWeight.w600),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            right: 25,
-                            top: 2,
-                            left: 25,
-                          ),
-                          child: Text(
-                            widget.details['description'],
-                            style: apptextstyle(
-                                color: AppColors.white,
-                                size: 10,
-                                weight: FontWeight.w200),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 25, top: 5),
-                          child: Text(
-                            'Bhk : ${widget.details['bhk']}',
-                            style: apptextstyle(
-                                color: AppColors.white,
-                                size: 15,
-                                weight: FontWeight.w400),
-                            overflow: TextOverflow.visible,
-                          ),
-                        ),
-                        reviewboxtile(
-                            size: widget.size,
-                            context: context,
-                            details: widget.details),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => BookingPage(
-                                      eventsMap: eventsMap,
-                                      place: widget.place,
-                                      details: widget.details,
-                                    )));
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 20, bottom: 30),
-                            child: Center(
-                              child: Container(
-                                height: widget.size.height / 16,
-                                width: widget.size.width / 1.8,
-                                decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(49, 255, 255, 255),
-                                    borderRadius: BorderRadius.circular(50)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 30, right: 10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Book Now',
-                                        style: apptextstyle(
-                                            color: AppColors.white,
-                                            size: widget.size.width / 28,
-                                            weight: FontWeight.w400),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.white,
-                                            borderRadius:
-                                                BorderRadius.circular(50)),
-                                        height: widget.size.height / 20,
-                                        width: widget.size.width / 4.4,
-                                        child: Center(
-                                          child: Text(
-                                            '${widget.details['price']}/night',
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  right: 25, top: 2, left: 25, bottom: 10),
+                              child: Text(
+                                widget.details['description'],
+                                style: apptextstyle(
+                                  color: AppColors.white,
+                                  size: 10,
+                                  weight: FontWeight.w200,
+                                ),
+                                overflow: TextOverflow.visible,
+                              ),
+                            ),
+                            reviewboxtile(
+                                size: widget.size,
+                                context: context,
+                                details: widget.details),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (ctx) => BookingPage(
+                                    eventsMap: eventsMap,
+                                    place: widget.place,
+                                    details: widget.details,
+                                  ),
+                                ));
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 20, bottom: 30),
+                                child: Center(
+                                  child: Container(
+                                    height: widget.size.height / 16,
+                                    width: widget.size.width / 1.8,
+                                    decoration: BoxDecoration(
+                                      color: const Color.fromARGB(
+                                          49, 255, 255, 255),
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 30, right: 10),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Book Now',
                                             style: apptextstyle(
-                                                color: AppColors.black,
-                                                size: 14,
-                                                weight: FontWeight.w700),
+                                              color: AppColors.white,
+                                              size: widget.size.width / 28,
+                                              weight: FontWeight.w400,
+                                            ),
                                             overflow: TextOverflow.ellipsis,
                                           ),
-                                        ),
-                                      )
-                                    ],
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              color: AppColors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
+                                            height: widget.size.height / 20,
+                                            width: widget.size.width / 4.4,
+                                            child: Center(
+                                              child: Text(
+                                                '${widget.details['price']}/night',
+                                                style: apptextstyle(
+                                                  color: AppColors.black,
+                                                  size: widget.size.width / 33,
+                                                  weight: FontWeight.w700,
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        )
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
-              ),
+                stackbuttons(context: context, details: widget.details),
+              ],
             ),
-            stackbuttons(context: context, details: widget.details),
-          ],
+          ),
         );
       },
     );

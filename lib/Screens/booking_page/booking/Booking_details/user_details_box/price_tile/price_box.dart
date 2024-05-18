@@ -12,7 +12,7 @@ priceBox(
     padding: const EdgeInsets.all(10),
     child: Container(
       width: size.width,
-      height: size.height / 5.7,
+      height: size.height / 5.5,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white),
           borderRadius: BorderRadius.circular(10)),
@@ -23,29 +23,35 @@ priceBox(
           children: [
             Text('Price',
                 style: apptextstyle(
-                    color: AppColors.white, size: 13, weight: FontWeight.w600)),
+                    color: AppColors.white,
+                    size: size.width / 28,
+                    weight: FontWeight.w600)),
             priceTile(
                 heading: 'Villa price',
-                value: '₹ ${int.parse(details['price'])}'),
+                value: '₹ ${int.parse(details['price'])}',
+                size: size.width / 35),
             priceTile(
                 heading:
                     'Extrapersons (${bookingdetails['extraperson']}X ${details['perperson']})',
+                size: size.width / 35,
                 value:
                     '₹ ${(int.parse(bookingdetails['extraperson'].toString()) * int.parse(details['perperson']))}'),
             priceTile(
                 heading:
                     'Per night ($days X ${int.parse(details['price']) + (int.parse(bookingdetails['extraperson'].toString()) * int.parse(details['perperson']))})',
+                size: size.width / 35,
                 value:
                     '₹ ${days * int.parse(details['price']) + (int.parse(bookingdetails['extraperson'].toString()) * int.parse(details['perperson']))}'),
             priceTile(
                 heading: 'Taxes',
+                size: size.width / 35,
                 value:
                     '₹ ${(int.parse(details['price']) - (int.parse(details['price']) / 1.1).round())}'),
             priceTile(
                 heading: 'Total amount',
                 value:
                     '₹ ${(int.parse(details['price']) - (int.parse(details['price']) / 1.1).round()) + (days * int.parse(details['price']) + (int.parse(bookingdetails['extraperson'].toString()) * int.parse(details['perperson'])))}',
-                size: 13,
+                size: size.width / 30,
                 weight: FontWeight.w600)
           ],
         ),

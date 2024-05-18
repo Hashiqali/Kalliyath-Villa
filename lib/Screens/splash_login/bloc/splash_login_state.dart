@@ -10,6 +10,7 @@ final class SplashLoginInitial extends SplashLoginState {}
 class NavigateToLogin extends ActionState {}
 
 class NavigateToHome extends ActionState {}
+class NavigateToNetworkError extends ActionState {}
 
 class NavigateTosignup extends ActionState {}
 

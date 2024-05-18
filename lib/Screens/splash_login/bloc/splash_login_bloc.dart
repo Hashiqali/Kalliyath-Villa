@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/firebase/chat_api.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/splash_login/login_signup/login/functions.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -21,20 +23,30 @@ class SplashLoginBloc extends Bloc<SplashLoginEvent, SplashLoginState> {
 
   FutureOr<void> initialfetchEvent(
       InitialfetchEvent event, Emitter<SplashLoginState> emit) async {
-    await initialgetfunctions();
-    await Future.delayed(const Duration(seconds: 3));
-    final status = signupDocuments.any((element) => element['status'] == true);
-    if (status == true) {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      await prefs.remove('User');
-    }
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? istrue = prefs.getBool('User');
-    if (istrue != null) {
-      userprofileUpdate();
-      emit(NavigateToHome());
+    await Future.delayed(const Duration(seconds: 2));
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      emit(NavigateToNetworkError());
     } else {
-      emit(NavigateToLogin());
+      await initialgetfunctions();
+      await Future.delayed(const Duration(seconds: 3));
+      final status =
+          signupDocuments.any((element) => element['status'] == true);
+      if (status == true) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.remove('User');
+      }
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool? istrue = prefs.getBool('User');
+      if (istrue != null) {
+        await userprofileUpdate();
+        ChatController.updateUserData({
+          'lastActive': DateTime.now(),
+        });
+        emit(NavigateToHome());
+      } else {
+        emit(NavigateToLogin());
+      }
     }
   }
 

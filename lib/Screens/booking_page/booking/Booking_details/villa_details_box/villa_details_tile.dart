@@ -12,7 +12,7 @@ firstBox(
   return Padding(
     padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
     child: Container(
-      height: size.height / 4,
+      height: size.height / 3.7,
       width: size.width,
       decoration: BoxDecoration(
           border: Border.all(color: AppColors.white),
@@ -27,7 +27,8 @@ firstBox(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(details['name'],
-                    style: apptextstyle(color: AppColors.white, size: 20)),
+                    style: apptextstyle(
+                        color: AppColors.white, size: size.width / 17)),
                 Padding(
                   padding: const EdgeInsets.only(top: 9),
                   child: Container(
@@ -42,8 +43,8 @@ firstBox(
                           details['totalstar'].toString() == '0'
                               ? '0.0'
                               : details['totalstar'].toString().substring(0, 3),
-                          style:
-                              apptextstyle(color: AppColors.white, size: 13)),
+                          style: apptextstyle(
+                              color: AppColors.white, size: size.width / 40)),
                     ),
                   ),
                 ),
@@ -51,7 +52,8 @@ firstBox(
             ),
             Text(
               '$place, ${details['locationadress']['state']}',
-              style: apptextstyle(color: AppColors.white, size: 12),
+              style:
+                  apptextstyle(color: AppColors.white, size: size.width / 30),
             ),
             const Divider(
               thickness: 1,
@@ -62,19 +64,21 @@ firstBox(
                 children: [
                   Expanded(
                       child: Padding(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(size.width / 70),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           'Check-in (11:00 AM)',
-                          style: apptextstyle(color: AppColors.white, size: 13),
+                          style: apptextstyle(
+                              color: AppColors.white, size: size.width / 35),
                         ),
                         Text(
                           DateFormat.yMMMMd().format(DateTime.parse(
                               bookingdetails['startingdate'].toString())),
-                          style: apptextstyle(color: AppColors.white, size: 13),
+                          style: apptextstyle(
+                              color: AppColors.white, size: size.width / 30),
                         ),
                       ],
                     ),
@@ -85,19 +89,21 @@ firstBox(
                   ),
                   Expanded(
                       child: Padding(
-                    padding: const EdgeInsets.all(4),
+                    padding: EdgeInsets.all(size.width / 70),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Text(
                           'Check-out (10:00 AM)',
-                          style: apptextstyle(color: AppColors.white, size: 13),
+                          style: apptextstyle(
+                              color: AppColors.white, size: size.width / 35),
                         ),
                         Text(
                           DateFormat.yMMMMd().format(DateTime.parse(
                               bookingdetails['endingdate'].toString())),
-                          style: apptextstyle(color: AppColors.white, size: 13),
+                          style: apptextstyle(
+                              color: AppColors.white, size: size.width / 30),
                         ),
                       ],
                     ),
@@ -110,27 +116,32 @@ firstBox(
               color: AppColors.white,
             ),
             SizedBox(
-              height: size.height / 20,
+              height: size.height / 18,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Guests',
-                    style: apptextstyle(color: AppColors.white, size: 13),
+                    style: apptextstyle(
+                        color: AppColors.white, size: size.width / 30),
                   ),
                   Row(
                     children: [
                       guestVisibility(
+                          appsize: size.width / 30,
                           visibility: true,
                           text: 'Adults : ${bookingdetails['adult']}'),
                       guestVisibility(
+                          appsize: size.width / 30,
                           visibility: bookingdetails['childrens'] != 0,
                           text:
                               ' , Childrens : ${bookingdetails['childrens']}'),
                       guestVisibility(
+                          appsize: size.width / 30,
                           visibility: bookingdetails['infants'] != 0,
                           text: ' , Infants : ${bookingdetails['infants']}'),
                       guestVisibility(
+                          appsize: size.width / 30,
                           visibility: bookingdetails['extraperson'] != 0,
                           text:
                               ' , Extraperson : ${bookingdetails['extraperson']}')

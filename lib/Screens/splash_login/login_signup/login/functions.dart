@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kalliyath_villa/Screens/profile/functions.dart';
+import 'package:kalliyath_villa/firebase/chat_api.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:kalliyath_villa/Screens/main_screen/mainscreen.dart';
 import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
@@ -36,6 +37,9 @@ login(key, context, phoneNumber, password) async {
       await Future.delayed(const Duration(seconds: 2));
       await adduserdata(phoneNumber.substring(3), password,
           userData['Username'], userData['Image'] ?? '', userData['id']);
+          ChatController.updateUserData({
+        'lastActive': DateTime.now(),
+      });
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (ctx) => const ManiScreen()),
           (route) => false);

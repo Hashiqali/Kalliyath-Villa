@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/booking_page/bloc/booking_bloc.dart';
 import 'package:kalliyath_villa/Screens/booking_page/booking/add_date_person/functions.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
@@ -14,6 +16,7 @@ int childrens = 0;
 int allowpersons = 0;
 int infants = 0;
 int extrapersons = 0;
+
 firstBookingTile(
     {required Size size,
     required Map<String, dynamic> details,
@@ -21,6 +24,7 @@ firstBookingTile(
     required BookingBloc counterwidgetbloc1,
     required Map<DateTime, List<dynamic>> eventsMap,
     required BuildContext context}) {
+  BookingBloc dateshow = BookingBloc();
   return SingleChildScrollView(
     child: Container(
       color: AppColors.black,
@@ -74,12 +78,27 @@ firstBookingTile(
             ),
           ),
           CalendarWidget(
+            dateshow: dateshow,
             eventsMap: eventsMap,
           ),
-          datewidget(
-              size: size,
-              startdate: startdate == null ? DateTime.now() : startdate!,
-              enddate: enddate == null ? DateTime.now() : enddate!),
+          BlocBuilder<BookingBloc, BookingState>(
+            bloc: dateshow,
+            builder: (context, state) {
+              bool visibledates = false;
+              if (state is BookingDateShowState) {
+                print('hello');
+                visibledates = true;
+              }
+              print('builded');
+              return Visibility(
+                visible: visibledates,
+                child: datewidget(
+                    size: size,
+                    startdate: startdate == null ? DateTime.now() : startdate!,
+                    enddate: enddate == null ? DateTime.now() : enddate!),
+              );
+            },
+          ),
           const Divider(
             thickness: 1,
             color: Color.fromARGB(221, 255, 255, 255),

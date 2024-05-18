@@ -9,9 +9,9 @@ import 'package:kalliyath_villa/Screens/profile/user_bookings/user_booking_detai
 import 'package:kalliyath_villa/Screens/profile/user_bookings/user_booking_tab_bar/user_booking_tabbar.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
- CancelBloc bookingsbuild = CancelBloc();
+
+CancelBloc bookingsbuild = CancelBloc();
 userBookingTile({required Size size, required Booking value}) {
- 
   return BlocBuilder<CancelBloc, CancelState>(
     bloc: bookingsbuild,
     builder: (context, state) {
@@ -108,7 +108,8 @@ userBookingTile({required Size size, required Booking value}) {
                                                               .lightgreen,
                                                           weight:
                                                               FontWeight.w600,
-                                                          size: 17),
+                                                          size:
+                                                              size.width / 23),
                                                     ),
                                                     Text(
                                                       DateFormat.yMMMMd()
@@ -121,7 +122,8 @@ userBookingTile({required Size size, required Booking value}) {
                                                               FontWeight.w200,
                                                           color:
                                                               AppColors.white,
-                                                          size: 13),
+                                                          size:
+                                                              size.width / 30),
                                                     )
                                                   ],
                                                 ),
@@ -133,7 +135,8 @@ userBookingTile({required Size size, required Booking value}) {
                                                           color: AppColors.red,
                                                           weight:
                                                               FontWeight.w600,
-                                                          size: 17),
+                                                          size:
+                                                              size.width / 23),
                                                     ),
                                                     Text(
                                                       DateFormat.yMMMMd()
@@ -146,7 +149,8 @@ userBookingTile({required Size size, required Booking value}) {
                                                               FontWeight.w200,
                                                           color:
                                                               AppColors.white,
-                                                          size: 13),
+                                                          size:
+                                                              size.width / 30),
                                                     ),
                                                   ],
                                                 ),
@@ -154,7 +158,7 @@ userBookingTile({required Size size, required Booking value}) {
                                                   'Total Amount : ₹${bookings['price']['total']}',
                                                   style: apptextstyle(
                                                       color: AppColors.white,
-                                                      size: 13,
+                                                      size: size.width / 30,
                                                       weight: FontWeight.w900),
                                                 ),
                                               ],

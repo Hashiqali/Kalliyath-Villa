@@ -20,7 +20,9 @@ Future<List> getUserbookings() async {
 filteruserbookings(List allbookings) {
   List result = [];
   for (var i in allbookings) {
-    if (i['user'] == appuserid && i['cancelled'] == false) {
+    if (i['user'] == appuserid &&
+        i['cancelled'] == false &&
+        DateTime.now().isBefore(DateTime.parse(i['villa']['checkout']))) {
       result.add(i);
     }
   }

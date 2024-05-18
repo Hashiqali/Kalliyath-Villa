@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:kalliyath_villa/Screens/home_screen/functions.dart';
 import 'package:kalliyath_villa/firebase/get_functions.dart';
 import 'package:meta/meta.dart';
 
@@ -20,7 +21,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   FutureOr<void> homerebuild(Homerebuild event, Emitter<HomeState> emit) async {
     await getVillaDetails();
-    emit(HomerebuildState(vllaDetails: villaDetails));
+   final data= await  villafiltered(villaDetails);
+    emit(HomerebuildState(vllaDetails: data));
   }
 
   FutureOr<void> likebutton(Likebutton event, Emitter<HomeState> emit) {

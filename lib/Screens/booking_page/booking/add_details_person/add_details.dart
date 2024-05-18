@@ -3,7 +3,6 @@ import 'package:kalliyath_villa/Screens/booking_page/booking/add_details_person/
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
 
-
 class BookingSecondPage extends StatefulWidget {
   const BookingSecondPage(
       {super.key,
@@ -19,6 +18,7 @@ class BookingSecondPage extends StatefulWidget {
 
 class _BookingSecondPageState extends State<BookingSecondPage> {
   final FocusNode _focusNode = FocusNode();
+
   GlobalKey<FormState> keybooking = GlobalKey<FormState>();
   TextEditingController namecontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();

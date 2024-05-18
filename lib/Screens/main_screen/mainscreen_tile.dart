@@ -6,6 +6,8 @@ import 'package:kalliyath_villa/Screens/profile/profile.dart';
 import 'package:kalliyath_villa/Screens/saved/saved_page.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 
+MainBloc navigationcontroll = MainBloc();
+bool navigationbool = true;
 Widget mainTaile({required MainBloc bloc, required Size size}) {
   int currentidx = 0;
   return BlocBuilder<MainBloc, MainState>(
@@ -17,46 +19,58 @@ Widget mainTaile({required MainBloc bloc, required Size size}) {
             index: currentidx,
             children: _widgetOptions,
           ),
-          Align(
-            heightFactor: size.height / 58,
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 50, right: 50),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: BottomNavigationBar(
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.home,
-                        size: 20,
+          BlocBuilder<MainBloc, MainState>(
+            bloc: navigationcontroll,
+            builder: (context, state) {
+              return AnimatedOpacity(
+                opacity: navigationbool ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: Visibility(
+                  visible: navigationbool,
+                  child: Align(
+                    heightFactor: size.height / 59,
+                    alignment: Alignment.bottomCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 50, right: 50),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(30),
+                        child: BottomNavigationBar(
+                          items: const <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.home,
+                                size: 20,
+                              ),
+                              label: 'Home',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.favorite,
+                                size: 20,
+                              ),
+                              label: 'Saved',
+                            ),
+                            BottomNavigationBarItem(
+                              icon: Icon(
+                                Icons.person,
+                                size: 20,
+                              ),
+                              label: 'Profile',
+                            ),
+                          ],
+                          currentIndex: currentidx,
+                          selectedItemColor: AppColors.black,
+                          onTap: (x) {
+                            currentidx = x;
+                            bloc.add(NavigationbarBuilder());
+                          },
+                        ),
                       ),
-                      label: 'Home',
                     ),
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.favorite,
-                        size: 20,
-                      ),
-                      label: 'Saved',
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(
-                        Icons.person,
-                        size: 20,
-                      ),
-                      label: 'Profile',
-                    ),
-                  ],
-                  currentIndex: currentidx,
-                  selectedItemColor: AppColors.black,
-                  onTap: (x) {
-                    currentidx = x;
-                    bloc.add(NavigationbarBuilder());
-                  },
+                  ),
                 ),
-              ),
-            ),
+              );
+            },
           ),
         ],
       );
