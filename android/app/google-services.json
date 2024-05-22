@@ -1,54 +1,55 @@
 {
-  "project_info": {
-    "project_number": "375481856635",
-    "project_id": "kalliyath-villa-5fb57",
-    "storage_bucket": "kalliyath-villa-5fb57.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:375481856635:android:cea4d81fc01876b403a8de",
-        "android_client_info": {
-          "package_name": "com.example.kalliyath_villa"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "375481856635-osqcp0ebqdssfimrsouql4tiibr3bcpd.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.kalliyath_villa",
-            "certificate_hash": "56a1085dc54deb0ad8303c394aa15a873cab3a56"
+    "project_info": {
+      "project_number": "375481856635",
+      "firebase_url": "https://kalliyath-villa-5fb57-default-rtdb.firebaseio.com",
+      "project_id": "kalliyath-villa-5fb57",
+      "storage_bucket": "kalliyath-villa-5fb57.appspot.com"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:375481856635:android:13cf897e6c36568703a8de",
+          "android_client_info": {
+            "package_name": "in.slashi.kalliyath_villa"
           }
         },
-        {
-          "client_id": "375481856635-su2l73gajit64jr590stkmn5g9h9huda.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCalB_YLbmlN0TW50Z2oDpjZ1S8U7hmW30"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "375481856635-su2l73gajit64jr590stkmn5g9h9huda.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "375481856635-3it52mr41rq2u70lc12t8vsr2t0867kq.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.kalliyathVilla"
-              }
+        "oauth_client": [
+          {
+            "client_id": "375481856635-0188q6gog440d5k72m7atm2agsd4ogda.apps.googleusercontent.com",
+            "client_type": 1,
+            "android_info": {
+              "package_name": "in.slashi.kalliyath_villa",
+              "certificate_hash": "56a1085dc54deb0ad8303c394aa15a873cab3a56"
             }
-          ]
+          },
+          {
+            "client_id": "375481856635-su2l73gajit64jr590stkmn5g9h9huda.apps.googleusercontent.com",
+            "client_type": 3
+          }
+        ],
+        "api_key": [
+          {
+            "current_key": "AIzaSyCyl31qbFYOnSPqzBnmdAy54dxROY9Le9Q"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": [
+              {
+                "client_id": "375481856635-su2l73gajit64jr590stkmn5g9h9huda.apps.googleusercontent.com",
+                "client_type": 3
+              },
+              {
+                "client_id": "375481856635-3it52mr41rq2u70lc12t8vsr2t0867kq.apps.googleusercontent.com",
+                "client_type": 2,
+                "ios_info": {
+                  "bundle_id": "com.example.kalliyathVilla"
+                }
+              }
+            ]
+          }
         }
       }
-    }
-  ],
-  "configuration_version": "1"
-}
+    ],
+    "configuration_version": "1"
+  }

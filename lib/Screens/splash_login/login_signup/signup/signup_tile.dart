@@ -6,6 +6,10 @@ import 'package:kalliyath_villa/style/textstyle.dart';
 signupTile(
     {required Size size,
     required formkey,
+    required FocusNode focusNodesignup1,
+    required FocusNode focusNodesignup2,
+    required FocusNode focusNodesignup3,
+    required FocusNode focusNodesignup4,
     required BuildContext context,
     required TextEditingController usernamecontroller,
     required TextEditingController phoneNumbercontroller,
@@ -40,6 +44,10 @@ signupTile(
                         backgroundColor: AppColors.white,
                         child: IconButton(
                             onPressed: () {
+                              focusNodesignup1.unfocus();
+                              focusNodesignup2.unfocus();
+                              focusNodesignup3.unfocus();
+                              focusNodesignup4.unfocus();
                               Navigator.of(context).pop();
                             },
                             icon: const Icon(Icons.arrow_back_ios_outlined,
@@ -55,6 +63,10 @@ signupTile(
                         size: 35,
                         family: 'Kalliyath1')),
                 signupFormTile(
+                    focusNodesignup1: focusNodesignup1,
+                    focusNodesignup2: focusNodesignup2,
+                    focusNodesignup3: focusNodesignup3,
+                    focusNodesignup4: focusNodesignup4,
                     context: context,
                     username: usernamecontroller,
                     phonenumber: phoneNumbercontroller,

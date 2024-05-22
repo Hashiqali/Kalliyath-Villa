@@ -27,7 +27,7 @@ class OtpVerificationPage extends StatefulWidget {
 
 class _OtpVerificationPageState extends State<OtpVerificationPage> {
   GlobalKey<FormState> otpkey = GlobalKey<FormState>();
-
+FocusNode focusNodeotp = FocusNode();
   TextEditingController otpcontroller = TextEditingController();
 
   @override
@@ -35,6 +35,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     bloc1.add(OtpTimerEvent());
     startCountdownTimer((int secondsRemaining) {
       seconds = secondsRemaining;
+      
     });
     super.initState();
   }
@@ -58,7 +59,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                   ),
                   image: const AssetImage(
                       'assets/images/Modern House Design.jpeg'))),
-          child: otpTile(
+          child: otpTile(focusNodeotp: focusNodeotp,
               istrue: widget.istrue,
               context: context,
               data: widget.data,

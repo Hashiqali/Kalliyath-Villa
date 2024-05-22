@@ -10,7 +10,15 @@ import 'package:kalliyath_villa/widget/google_Button_widget/google_login_widget.
 import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
 
 bool switchON = false;
-Widget formTile({context, key, size, phonenumber, password}) {
+Widget formTile({
+  context,
+  key,
+  size,
+  phonenumber,
+  password,
+  required FocusNode focusNodelogin1,
+  required FocusNode focusNodelogin2,
+}) {
   return Form(
     key: key,
     child: Padding(
@@ -23,6 +31,7 @@ Widget formTile({context, key, size, phonenumber, password}) {
               style: apptextstyle(
                   color: AppColors.white, size: 12, family: 'Kalliyath1')),
           TextFormField(
+            focusNode: focusNodelogin1,
             autovalidateMode: AutovalidateMode.onUserInteraction,
             controller: phonenumber,
             validator: (value) {
@@ -68,6 +77,7 @@ Widget formTile({context, key, size, phonenumber, password}) {
                 istrue = true;
               }
               return TextFormField(
+                focusNode: focusNodelogin2,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Enter Password';
@@ -138,6 +148,8 @@ Widget formTile({context, key, size, phonenumber, password}) {
               ),
               GestureDetector(
                 onTap: () {
+                  focusNodelogin1.unfocus();
+                  focusNodelogin2.unfocus();
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (ctx) => ForgotPhoneNumberPage()));
                 },
@@ -172,8 +184,13 @@ Widget formTile({context, key, size, phonenumber, password}) {
                   splashColor: const Color.fromARGB(121, 129, 128, 128),
                   onTap: () {
                     if (!loading) {
-                      login(key, context, '+91${phonenumber.text.trim()}',
-                          password.text.trim());
+                      login(
+                          key,
+                          context,
+                          '+91${phonenumber.text.trim()}',
+                          password.text.trim(),
+                          focusNodelogin1,
+                          focusNodelogin2);
                     }
                   },
                   child: Container(
@@ -203,7 +220,11 @@ Widget formTile({context, key, size, phonenumber, password}) {
           SizedBox(
             height: size.height / 50,
           ),
-          googleButton(context: context, size: size, istrue: false),
+          googleButton(
+            context: context,
+            size: size,
+            istrue: false,
+          ),
         ],
       ),
     ),

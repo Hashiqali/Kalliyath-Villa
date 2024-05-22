@@ -13,7 +13,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   bool passwordvisible = false;
-
+FocusNode focusNodelogin1 = FocusNode();
+FocusNode focusNodelogin2 = FocusNode();
   GlobalKey<FormState> loginkey = GlobalKey<FormState>();
 
   TextEditingController phonenumbercontroller = TextEditingController();
@@ -31,7 +32,8 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return loginTile(
+    return loginTile(focusNodelogin1: focusNodelogin1,
+    focusNodelogin2: focusNodelogin2,
         size: size,
         bloc1: bloc1,
         loginkey: loginkey,

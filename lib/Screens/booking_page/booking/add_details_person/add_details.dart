@@ -17,22 +17,16 @@ class BookingSecondPage extends StatefulWidget {
 }
 
 class _BookingSecondPageState extends State<BookingSecondPage> {
-  final FocusNode _focusNode = FocusNode();
+  final FocusNode focusNode1 = FocusNode();
+  final FocusNode focusNode2 = FocusNode();
+  final FocusNode focusNode3 = FocusNode();
+  final FocusNode focusNode4 = FocusNode();
 
   GlobalKey<FormState> keybooking = GlobalKey<FormState>();
   TextEditingController namecontroller = TextEditingController();
   TextEditingController phonecontroller = TextEditingController();
   TextEditingController addresscontroller = TextEditingController();
   TextEditingController pincodecontroller = TextEditingController();
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(const Duration(seconds: 1));
-
-      FocusScope.of(context).requestFocus(_focusNode);
-    });
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +55,10 @@ class _BookingSecondPageState extends State<BookingSecondPage> {
           pincodecontroller: pincodecontroller,
           key: keybooking,
           size: size,
-          focusNode: _focusNode,
+          focusNode1: focusNode1,
+          focusNode2: focusNode2,
+          focusNode3: focusNode3,
+          focusNode4: focusNode4,
           bookingdetails: widget.bookingdatas),
     );
   }

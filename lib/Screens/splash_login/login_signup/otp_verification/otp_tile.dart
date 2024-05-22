@@ -8,6 +8,7 @@ import 'package:kalliyath_villa/style/textstyle.dart';
 
 Widget otpTile(
     {context,
+    required FocusNode focusNodeotp,
     otpkey,
     size,
     otpcontroller,
@@ -63,6 +64,7 @@ Widget otpTile(
                       fontWeight: FontWeight.w400),
                 ),
                 TextFormField(
+                  focusNode: focusNodeotp,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   controller: otpcontroller,
                   validator: (value) {
@@ -105,6 +107,7 @@ Widget otpTile(
                         splashColor: const Color.fromARGB(121, 129, 128, 128),
                         onTap: () {
                           if (!loading) {
+                            focusNodeotp.unfocus();
                             buttonverify.add(LodingEvent(istrue: true));
                             otpverify(
                                 istrue: istrue,
@@ -149,9 +152,10 @@ Widget otpTile(
                   bloc: bloc1,
                   builder: (context, state) {
                     if (state is OtpTimerState) {
+                      print('builded== $seconds');
                       return Center(
                         child: Text(
-                          'Re-send code in $seconds',
+                          'Re-send code in $secondss',
                           style: const TextStyle(
                               color: AppColors.white,
                               fontFamily: 'Kalliyath1',

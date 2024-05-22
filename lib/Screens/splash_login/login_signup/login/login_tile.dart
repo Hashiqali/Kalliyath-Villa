@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kalliyath_villa/Screens/splash_login/bloc/splash_login_bloc.dart';
@@ -9,6 +8,8 @@ import 'package:kalliyath_villa/style/textstyle.dart';
 
 loginTile(
     {required Size size,
+    required FocusNode focusNodelogin1,
+    required FocusNode focusNodelogin2,
     required SplashLoginBloc bloc1,
     required loginkey,
     required TextEditingController passwordcontroller,
@@ -39,15 +40,17 @@ loginTile(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                   Text(
-                    'Login',
-                    style: apptextstyle(color: AppColors.white, size: 35,family: 'Kalliyath1')
-                    
-                  ),
+                  Text('Login',
+                      style: apptextstyle(
+                          color: AppColors.white,
+                          size: 35,
+                          family: 'Kalliyath1')),
                   SizedBox(
                     height: size.height / 50,
                   ),
                   formTile(
+                      focusNodelogin1: focusNodelogin1,
+                      focusNodelogin2: focusNodelogin2,
                       context: context,
                       key: loginkey,
                       password: passwordcontroller,
@@ -58,6 +61,8 @@ loginTile(
                   ),
                   GestureDetector(
                     onTap: () {
+                      focusNodelogin1.unfocus();
+                      focusNodelogin2.unfocus();
                       bloc1.add(LoginToSignupEvent());
                     },
                     child: const Row(
@@ -76,7 +81,7 @@ loginTile(
                             Text(
                               'Signup',
                               style: TextStyle(
-                                  color:AppColors.lightgreen,
+                                  color: AppColors.lightgreen,
                                   fontFamily: 'Kalliyath1',
                                   fontWeight: FontWeight.w400),
                             ),

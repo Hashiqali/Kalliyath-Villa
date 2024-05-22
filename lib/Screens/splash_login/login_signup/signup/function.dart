@@ -17,6 +17,7 @@ signup(
     } else {
       final data = {
         'Email': "",
+        'Image':"",
         'Username': username,
         'Phone Number': '+91$phonenumber',
         'Password': password,

@@ -10,8 +10,19 @@ import 'package:kalliyath_villa/Screens/splash_login/splash/splash.dart';
 
 SplashLoginBloc _bloc = SplashLoginBloc();
 SplashLoginBloc _bloc1 = SplashLoginBloc();
-signupFormTile(
-    {context, username, phonenumber, password, cnfmpassword, size, formkey}) {
+signupFormTile({
+  context,
+  username,
+  phonenumber,
+  password,
+  cnfmpassword,
+  size,
+  formkey,
+  required FocusNode focusNodesignup1,
+  required FocusNode focusNodesignup2,
+  required FocusNode focusNodesignup3,
+  required FocusNode focusNodesignup4,
+}) {
   return Padding(
     padding: const EdgeInsets.only(left: 15, right: 15),
     child: Column(
@@ -203,6 +214,10 @@ signupFormTile(
                 splashColor: const Color.fromARGB(121, 129, 128, 128),
                 onTap: () {
                   if (!loading) {
+                    focusNodesignup1.unfocus();
+                    focusNodesignup2.unfocus();
+                    focusNodesignup3.unfocus();
+                    focusNodesignup4.unfocus();
                     signup(
                         context: context,
                         username: username.text.trim(),
@@ -239,12 +254,20 @@ signupFormTile(
         SizedBox(
           height: size.height / 65,
         ),
-        googleButton(context: context, size: size, istrue: true),
+        googleButton(
+          context: context,
+          size: size,
+          istrue: true,
+        ),
         SizedBox(
           height: size.height / 100,
         ),
         GestureDetector(
           onTap: () {
+            focusNodesignup1.unfocus();
+            focusNodesignup2.unfocus();
+            focusNodesignup3.unfocus();
+            focusNodesignup4.unfocus();
             Navigator.of(context).pop();
           },
           child: const Row(

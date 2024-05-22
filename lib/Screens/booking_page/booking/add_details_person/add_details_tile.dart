@@ -12,7 +12,10 @@ secondBookingTile(
     {required Size size,
     required BuildContext context,
     required key,
-    required focusNode,
+    required focusNode1,
+    required focusNode2,
+    required focusNode3,
+    required focusNode4,
     required Map<String, dynamic> details,
     required String place,
     required Map<String, Object?> bookingdetails,
@@ -49,6 +52,7 @@ secondBookingTile(
                                   color: AppColors.white, size: 14)),
                         ),
                         TextFormField(
+                            focusNode: focusNode1,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter name';
@@ -56,7 +60,6 @@ secondBookingTile(
                               return null;
                             },
                             controller: namecontroller,
-                            focusNode: focusNode,
                             autovalidateMode:
                                 AutovalidateMode.onUserInteraction,
                             style: const TextStyle(color: AppColors.white),
@@ -93,6 +96,9 @@ secondBookingTile(
                                             color: AppColors.white, size: 14)),
                                   ),
                                   IntlPhoneField(
+                                    initialValue: '+91',
+                                    dropdownTextStyle: const TextStyle(
+                                        color: AppColors.white, fontSize: 15.4),
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
                                           RegExp(r'^[0-9]*$')),
@@ -118,10 +124,6 @@ secondBookingTile(
                                       color: AppColors.white,
                                     ),
                                     decoration: InputDecoration(
-                                      prefixText: '+$countryCode',
-                                      prefixStyle: const TextStyle(
-                                          color: AppColors.white,
-                                          fontSize: 16.4),
                                       hintText: 'Phone Number',
                                       hintStyle: const TextStyle(
                                           color:
@@ -144,6 +146,7 @@ secondBookingTile(
                                       contentPadding: const EdgeInsets.all(8),
                                     ),
                                     onCountryChanged: (phone) {
+                                      print('phone==$phone');
                                       countryCode = phone.displayCC;
                                     },
                                   ),
@@ -164,6 +167,7 @@ secondBookingTile(
                         SizedBox(
                           height: size.height / 9,
                           child: TextFormField(
+                            focusNode: focusNode3,
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please add address';
@@ -206,6 +210,7 @@ secondBookingTile(
                                   color: AppColors.white, size: 14)),
                         ),
                         TextFormField(
+                            focusNode: focusNode4,
                             keyboardType: TextInputType.number,
                             validator: (value) {
                               if (value!.isEmpty) {
@@ -251,12 +256,15 @@ secondBookingTile(
           ),
           GestureDetector(
             onTap: () {
-              focusNode.unfocus();
+              focusNode1.unfocus();
+              focusNode2.unfocus();
+              focusNode3.unfocus();
+              focusNode4.unfocus();
               confirmbooking(
                   details: details,
                   place: place,
                   context: context,
-                  countryCode: countryCode,
+                  countryCode: countryCode == '' ? '91' : countryCode,
                   cityvalue: cityvalue,
                   countryvalue: countryvalue,
                   statevalue: statevalue,

@@ -33,7 +33,6 @@ otpverify(
           final nowsignup = signupDocuments
               .firstWhere((element) => element['Phone Number'] == phoneNumber);
 
-
           await adduserdata(nowsignup['Phone Number'], nowsignup['Password'],
               nowsignup['Username'], '', nowsignup['id']);
 
@@ -79,15 +78,17 @@ void resendOTP(String phoneNumber, BuildContext context, otpToken) async {
   );
 }
 
-void startCountdownTimer(Function(int) callback) {
+int secondss = 30;
+startCountdownTimer(Function(int) callback) {
   int secondsRemaining = 30;
 
   Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-    if (secondsRemaining == 0) {
+    if ( secondss == 0) {
       timer.cancel();
       bloc1.add(OtpTimerDoneEvent());
     } else {
       secondsRemaining--;
+      secondss = secondsRemaining;
       bloc1.add(OtpTimerEvent());
       callback(secondsRemaining);
     }

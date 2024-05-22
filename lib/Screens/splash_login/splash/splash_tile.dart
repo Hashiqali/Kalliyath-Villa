@@ -47,8 +47,8 @@ splashTile({required Size size, required SplashLoginBloc bloc1}) {
                   heightFactor: 0.5,
                   widthFactor: .0,
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 23,
+                    padding: EdgeInsets.only(
+                      left: size.width / 21,
                     ),
                     child: Text(
                       'VILLAS',

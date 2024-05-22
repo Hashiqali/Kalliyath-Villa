@@ -13,12 +13,16 @@ class SignupPage extends StatelessWidget {
   final TextEditingController confirmPasswordcontroller =
       TextEditingController();
   final TextEditingController phoneNumbercontroller = TextEditingController();
+  FocusNode focusNodesignup1 = FocusNode();
+  FocusNode focusNodesignup2 = FocusNode();
+  FocusNode focusNodesignup3 = FocusNode();
+  FocusNode focusNodesignup4 = FocusNode();
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
-        body: signupTile(
+        body: signupTile(focusNodesignup1: focusNodesignup1,focusNodesignup2: focusNodesignup2,focusNodesignup3: focusNodesignup3,focusNodesignup4: focusNodesignup4,
             size: size,
             formkey: formkey,
             context: context,

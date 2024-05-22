@@ -53,8 +53,8 @@ class DefaultFirebaseOptions {
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCalB_YLbmlN0TW50Z2oDpjZ1S8U7hmW30',
-    appId: '1:375481856635:android:cea4d81fc01876b403a8de',
+    apiKey: 'AIzaSyCyl31qbFYOnSPqzBnmdAy54dxROY9Le9Q',
+    appId: '1:375481856635:android:13cf897e6c36568703a8de',
     messagingSenderId: '375481856635',
     projectId: 'kalliyath-villa-5fb57',
     storageBucket: 'kalliyath-villa-5fb57.appspot.com',
@@ -66,8 +66,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '375481856635',
     projectId: 'kalliyath-villa-5fb57',
     storageBucket: 'kalliyath-villa-5fb57.appspot.com',
-    androidClientId: '375481856635-osqcp0ebqdssfimrsouql4tiibr3bcpd.apps.googleusercontent.com',
-    iosClientId: '375481856635-3it52mr41rq2u70lc12t8vsr2t0867kq.apps.googleusercontent.com',
+    androidClientId:
+        '375481856635-osqcp0ebqdssfimrsouql4tiibr3bcpd.apps.googleusercontent.com',
+    iosClientId:
+        '375481856635-3it52mr41rq2u70lc12t8vsr2t0867kq.apps.googleusercontent.com',
     iosBundleId: 'com.example.kalliyathVilla',
   );
 
@@ -77,8 +79,10 @@ class DefaultFirebaseOptions {
     messagingSenderId: '375481856635',
     projectId: 'kalliyath-villa-5fb57',
     storageBucket: 'kalliyath-villa-5fb57.appspot.com',
-    androidClientId: '375481856635-osqcp0ebqdssfimrsouql4tiibr3bcpd.apps.googleusercontent.com',
-    iosClientId: '375481856635-tejqjad3p41bcflohnmj8df802nm59ll.apps.googleusercontent.com',
+    androidClientId:
+        '375481856635-osqcp0ebqdssfimrsouql4tiibr3bcpd.apps.googleusercontent.com',
+    iosClientId:
+        '375481856635-tejqjad3p41bcflohnmj8df802nm59ll.apps.googleusercontent.com',
     iosBundleId: 'com.example.kalliyathVilla.RunnerTests',
   );
 }

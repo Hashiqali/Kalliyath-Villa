@@ -9,9 +9,11 @@ import 'package:kalliyath_villa/firebase/user.dart';
 import 'package:kalliyath_villa/widget/snackbar_widget/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-login(key, context, phoneNumber, password) async {
+login(key, context, phoneNumber, password,focusNodelogin1,focusNodelogin2) async {
   if (key.currentState!.validate()) {
     bloc1.add(LodingEvent(istrue: false));
+    focusNodelogin1.unfocus();
+                      focusNodelogin2.unfocus();
     await getsignup();
     final userExists = signupDocuments
         .any((element) => element['Phone Number'] == phoneNumber);
