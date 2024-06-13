@@ -8,31 +8,34 @@ facilitiestile({required Map<String, dynamic> details, required Size size}) {
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       Padding(
-        padding: const EdgeInsets.only(
-          top: 10,
-          left: 25,
+        padding: EdgeInsets.only(
+          top: size.height / 60,
+          left: size.width / 15,
         ),
         child: Text(
           'Facilities',
           style: apptextstyle(
-              color: AppColors.white, size: 16, weight: FontWeight.w600),
+              color: AppColors.white,
+              size: size.width / 25,
+              weight: FontWeight.w600),
           overflow: TextOverflow.visible,
         ),
       ),
       Padding(
-        padding: const EdgeInsets.only(
-          left: 25,
-          right: 25,
+        padding: EdgeInsets.only(
+          left: size.width / 17,
+          right: size.width / 17,
         ),
         child: GridView.builder(
+          padding: const EdgeInsets.only(top: 10),
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: details['facilities'].length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 5.0,
-              childAspectRatio: .8),
+              crossAxisSpacing: size.width / 40,
+              mainAxisSpacing: size.width / 40,
+              childAspectRatio: size.aspectRatio / .6),
           itemBuilder: (BuildContext context, int index) {
             final item = details['facilities'][index];
 

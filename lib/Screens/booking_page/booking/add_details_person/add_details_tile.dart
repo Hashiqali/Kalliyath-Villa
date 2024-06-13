@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:intl_phone_number_field/intl_phone_number_field.dart';
+import 'package:kalliyath_villa/Screens/booking_page/booking/add_details_person/country_length/country_no_length.dart';
 import 'package:kalliyath_villa/Screens/booking_page/booking/add_details_person/functions.dart';
 import 'package:kalliyath_villa/colors/colors.dart';
 import 'package:kalliyath_villa/style/textstyle.dart';
@@ -8,6 +9,7 @@ import 'package:kalliyath_villa/style/textstyle.dart';
 import 'package:kalliyath_villa/widget/select_country_state_city_widget/select_widget.dart';
 
 String countryCode = '';
+int numberlength = 10;
 secondBookingTile(
     {required Size size,
     required BuildContext context,
@@ -95,61 +97,135 @@ secondBookingTile(
                                         style: apptextstyle(
                                             color: AppColors.white, size: 14)),
                                   ),
-                                  IntlPhoneField(
-                                    initialValue: '+91',
-                                    dropdownTextStyle: const TextStyle(
-                                        color: AppColors.white, fontSize: 15.4),
-                                    inputFormatters: [
-                                      FilteringTextInputFormatter.allow(
-                                          RegExp(r'^[0-9]*$')),
-                                    ],
+                                  InternationalPhoneNumberInput(
+                                    height: size.height / 17,
                                     controller: phonecontroller,
-                                    validator: (phone) {
-                                      if (phone == null ||
-                                          !phone.isValidNumber()) {
-                                        return 'Please enter a valid phone number';
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      LengthLimitingTextInputFormatter(
+                                          numberlength)
+                                    ],
+                                    initCountry: CountryCodeModel(
+                                        name: "India",
+                                        dial_code: "+91",
+                                        code: "IN"),
+                                    betweenPadding: 23,
+                                    onInputChanged: (phone) {
+                                      // print(phone.code);
+                                      // print(phone.dial_code);
+                                      // print(phone.number);
+
+                                      // print(phone.rawNumber);
+                                      // print(phone.rawDialCode);
+                                      numberlength =
+                                          countryPhoneLength[phone.dial_code] ??
+                                              10.toInt();
+
+                                      countryCode = phone.rawDialCode;
+                                    },
+                                    dialogConfig: DialogConfig(
+                                      backgroundColor:
+                                          const Color.fromARGB(255, 91, 91, 92),
+                                      searchBoxBackgroundColor:
+                                          const Color(0xFF56565a),
+                                      searchBoxIconColor:
+                                          const Color(0xFFFAFAFA),
+                                      countryItemHeight: 55,
+                                      topBarColor: const Color(0xFF1B1C24),
+                                      selectedItemColor:
+                                          const Color(0xFF56565a),
+                                      selectedIcon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10),
+                                        child: Image.asset(
+                                          "assets/check.png",
+                                          width: 20,
+                                          fit: BoxFit.fitWidth,
+                                        ),
+                                      ),
+                                      textStyle: TextStyle(
+                                        color: const Color(0xFFFAFAFA)
+                                            .withOpacity(0.7),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      searchBoxTextStyle: TextStyle(
+                                        color: const Color(0xFFFAFAFA)
+                                            .withOpacity(0.7),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      titleStyle: const TextStyle(
+                                        color: Color(0xFFFAFAFA),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      searchBoxHintStyle: TextStyle(
+                                        color: const Color(0xFFFAFAFA)
+                                            .withOpacity(0.7),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    countryConfig: CountryConfig(
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                              186, 46, 45, 45),
+                                          border: Border.all(
+                                              width: 1,
+                                              color: const Color.fromARGB(
+                                                  255, 91, 91, 92)),
+                                          borderRadius:
+                                              BorderRadius.circular(3),
+                                        ),
+                                        flagSize: size.width / 18,
+                                        noFlag: false,
+                                        textStyle: apptextstyle(
+                                            color: AppColors.white,
+                                            size: 16,
+                                            family: '')),
+                                    validator: (number) {
+                                      if (number.number.isEmpty) {
+                                        return "Please enter phone number";
+                                      } else if (number.number.length !=
+                                          numberlength) {
+                                        return "Please enter valid phone number";
                                       }
                                       return null;
                                     },
-                                    initialCountryCode: 'IN',
-                                    autovalidateMode:
-                                        AutovalidateMode.onUserInteraction,
-                                    keyboardType: TextInputType.phone,
-                                    dropdownIcon: const Icon(
-                                      Icons.arrow_drop_down,
-                                      color: AppColors.white,
-                                    ),
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: AppColors.white,
-                                    ),
-                                    decoration: InputDecoration(
-                                      hintText: 'Phone Number',
-                                      hintStyle: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 86, 86, 86),
-                                          fontWeight: FontWeight.normal),
-                                      filled: true,
-                                      fillColor:
+                                    phoneConfig: PhoneConfig(
+                                      focusedColor: AppColors.white,
+                                      enabledColor:
+                                          const Color.fromARGB(255, 91, 91, 92),
+                                      errorColor: AppColors.red,
+                                      focusNode: focusNode2,
+                                      radius: 3,
+                                      borderWidth: 1,
+                                      backgroundColor:
                                           const Color.fromARGB(186, 46, 45, 45),
-                                      focusedBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                      popUpErrorText: true,
+                                      showCursor: true,
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      errorPadding:
+                                          const EdgeInsets.only(top: 14),
+                                      errorStyle: apptextstyle(
+                                          family: '',
+                                          color: AppColors.red,
+                                          weight: FontWeight.w400,
+                                          size: 12),
+                                      textStyle: apptextstyle(
+                                          family: '',
                                           color: AppColors.white,
-                                          width: 2.0,
-                                        ),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(3),
-                                      ),
-                                      suffixIcon: const Icon(
-                                          Icons.phone_android_outlined),
-                                      contentPadding: const EdgeInsets.all(8),
+                                          weight: FontWeight.w400,
+                                          size: 16),
+                                      hintStyle: apptextstyle(
+                                          family: '',
+                                          color:
+                                              AppColors.white.withOpacity(0.5),
+                                          size: 12),
                                     ),
-                                    onCountryChanged: (phone) {
-                                      print('phone==$phone');
-                                      countryCode = phone.displayCC;
-                                    },
-                                  ),
+                                  )
                                 ],
                               ),
                             ),

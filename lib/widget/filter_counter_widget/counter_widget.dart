@@ -10,8 +10,10 @@ counterWidget({required Size size}) {
   bhk = 1;
 
   void incrementCounter() {
-    bhk++;
-    counterbloc.add(BhkBuilder());
+    if (bhk < 5) {
+      bhk++;
+      counterbloc.add(BhkBuilder());
+    }
   }
 
   void decrementCounter() {
